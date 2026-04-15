@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>cyber site</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  color: #00ffe1;
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
+}
+
+/* ФОН */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url("bg.jpg") center/cover;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+/* ПЕРСОНАЖ */
+.character {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 90%;
+}
+
+/* НЕОНОВЫЕ ПАНЕЛИ */
+.panel {
+  position: absolute;
+  border: 2px solid #00ffe1;
+  padding: 15px;
+  background: rgba(0,0,0,0.6);
+  box-shadow: 0 0 20px #00ffe1;
+}
+
+/* разные панели */
+#panel1 { top: 50px; left: 50px; }
+#panel2 { bottom: 50px; right: 50px; }
+
+/* hover эффект */
+.panel:hover {
+  box-shadow: 0 0 40px #00ffe1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<img class="character" src="character.png">
+
+<div class="panel" id="panel1">
+  <h2>РАСШИРЕНИЕ</h2>
+  <p>система активирована</p>
+</div>
+
+<div class="panel" id="panel2">
+  <h2>СЦЕНАРИИ</h2>
+  <p>привязка к персонажу</p>
+</div>
+
+</body>
+</html>
