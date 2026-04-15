@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MICROCOT // CYBER_HUB</title>
+    <title>MICROCOT // TERMINAL</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
@@ -29,7 +29,8 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center; /* Центрировать элементы шапки и сетку */
+            justify-content: flex-start; /* Элементы идут сверху вниз */
         }
 
         /* ФОНОВЫЙ АРТ И ЭФФЕКТЫ */
@@ -37,6 +38,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
+            /* ИСПОЛЬЗУЕМ ЗАГРУЖЕННЫЙ bg.jpg, судя по скриншоту, он работает */
             background: url('bg.jpg') center/cover no-repeat;
             opacity: 0.35;
             z-index: -2;
@@ -53,6 +55,17 @@
             pointer-events: none;
         }
 
+        /* Затемнение фона, чтобы текст читался лучше */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+
         /* ШАПКА / ЛОГОТИП */
         header {
             width: 100%;
@@ -62,6 +75,8 @@
             background: var(--panel-bg);
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
             margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
         }
 
         .sys-title {
@@ -72,13 +87,13 @@
             text-shadow: 0 0 10px var(--cyan);
         }
 
-        /* ГЛАВНЫЙ КОНТЕЙНЕР */
+        /* ГЛАВНЫЙ КОНТЕЙНЕР ДЛЯ ЦЕНТРИРОВАНИЯ ЭЛЕМЕНТОВ */
         .main-content {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center; /* Центрировать аватар и сетку */
             width: 100%;
-            max-width: 1000px;
+            max-width: 1000px; /* Максимальная ширина контента */
             padding: 20px;
             z-index: 1;
         }
@@ -86,37 +101,37 @@
         /* АВАТАР ПЕРСОНАЖА БЕЗ РАМКИ */
         .avatar-container {
             margin: 40px 0; /* Увеличил отступ */
+            /* УБРАТЬ ВСЕ ЧЕРНЫЕ КВАДРАТЫ И РАМКИ
+               Контейнер теперь полностью прозрачен
+            */
+            background: transparent;
+            border: none;
+            box-shadow: none;
             line-height: 0; /* Чтобы не было лишних отступов */
         }
 
         .avatar-img {
-            width: 200px; /* Сохранил размер */
+            width: 200px;
             height: 200px;
             object-fit: cover;
-            border: none; /* УБРАТЬ РАМКУ */
-            /* НЕОНОВО-ГОЛУБОЕ СВЕЧЕНИЕ К КРАЯМ ПЕРСОНАЖА */
+            border: none; /* УБРАТЬ РАМКУ У ИЗОБРАЖЕНИЯ */
+            /* СВЕЧЕНИЕ К КРАЯМ ПЕРСОНАЖА, А НЕ К РАМКЕ */
             filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.5)); 
-            /* Добавил плавное парение, это круче */
-            animation: char-float 4s infinite ease-in-out;
-        }
-
-        @keyframes char-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
         }
 
         /* СЕТКА С ЦЕНТРИРОВАННЫМИ КНОПКАМИ */
-        .links-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 в ряд */
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap; /* Чтобы элементы переносились */
+            justify-content: center; /* Центрировать элементы внутри сетки */
             gap: 20px;
-            width: 100%;
-            max-width: 900px; /* Центрировать сетку */
-            margin-top: 30px;
+            max-width: 900px; /* Максимальная ширина сетки */
+            width: 100%; /* Занимать всю доступную ширину до макс. */
+            margin: 30px auto; /* ГАРАНТИЯ ЦЕНТРИРОВАНИЯ СЕТКИ */
             padding: 20px;
         }
 
-        /* СТИЛЬ КИБЕР-КНОПОК (Cyberpunk style clip-path) */
+        /* СТИЛЬ КИБЕР-КНОПОК */
         .cyber-link {
             display: block;
             position: relative;
@@ -129,9 +144,9 @@
             font-size: 1.1rem;
             text-align: center;
             text-transform: uppercase;
-            /* ВОССТАНОВИТЬ SCOPE-PATH CYBERPUNK STYLE */
             clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
             transition: all 0.2s ease-in-out;
+            width: 250px; /* Фиксированная ширина карточек */
         }
 
         /* ДОПОЛНИТЕЛЬНЫЙ ТЕКСТ В КНОПКАХ */
@@ -175,7 +190,7 @@
             padding: 20px;
             text-align: center;
             font-size: 0.9rem;
-            color: var(--cyan); /* Сделал футер неоново-голубым */
+            color: #555;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
@@ -184,6 +199,7 @@
 <body>
 
     <div class="bg-layer"></div>
+    <div class="overlay"></div>
     <div class="scanline"></div>
 
     <header>
@@ -196,7 +212,7 @@
             <img src="char.jpg" alt="Microcot Avatar" class="avatar-img">
         </div>
 
-        <div class="links-grid">
+        <div class="grid-container">
             
             <a href="https://github.com/aimicrocot" target="_blank" class="cyber-link accent">
                 Пресет
