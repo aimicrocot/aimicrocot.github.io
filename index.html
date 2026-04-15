@@ -4,248 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MICROCOT // TERMINAL</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    
     <style>
-        :root {
-            --cyan: #00f0ff;
-            --pink: #ff003c;
-            --dark: #080808;
-            --panel-bg: rgba(8, 8, 8, 0.85); /* Затемненный фон кнопок */
-        }
-
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-
+        /* Общие настройки страницы */
         body {
-            background-color: var(--dark);
-            color: var(--cyan);
-            font-family: 'Share Tech Mono', monospace;
-            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            background-image: url('bg.jpg'); /* Твой фон */
+            background-color: black;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #00fbff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Центрировать элементы шапки и сетку */
-            justify-content: flex-start; /* Элементы идут сверху вниз */
         }
 
-        /* ФОНОВЫЙ АРТ И ЭФФЕКТЫ */
-        .bg-layer {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            /* ИСПОЛЬЗУЕМ ЗАГРУЖЕННЫЙ bg.jpg, судя по скриншоту, он работает */
-            background: url('bg.jpg') center/cover no-repeat;
-            opacity: 0.35;
-            z-index: -2;
-        }
-
-        /* ЭФФЕКТ ПОЛОС (SCANLINES) */
-        .scanline {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0, 240, 255, 0.05) 51%);
-            background-size: 100% 4px;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* Затемнение фона, чтобы текст читался лучше */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: -1;
-        }
-
-        /* ШАПКА / ЛОГОТИП */
-        header {
-            width: 100%;
-            padding: 20px;
+        .header {
             text-align: center;
-            border-bottom: 2px solid var(--cyan);
-            background: var(--panel-bg);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 10;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-top: 30px;
+            font-size: 2em;
+            text-shadow: 0 0 10px #00fbff;
         }
 
-        .sys-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 4px;
-            text-shadow: 0 0 10px var(--cyan);
-        }
-
-        /* ГЛАВНЫЙ КОНТЕЙНЕР ДЛЯ ЦЕНТРИРОВАНИЯ ЭЛЕМЕНТОВ */
-        .main-content {
+        /* Стили для персонажа */
+        .character-container {
+            margin: 40px 0;
             display: flex;
-            flex-direction: column;
-            align-items: center; /* Центрировать аватар и сетку */
-            width: 100%;
-            max-width: 1000px; /* Максимальная ширина контента */
-            padding: 20px;
-            z-index: 1;
+            justify-content: center;
         }
 
-        /* АВАТАР ПЕРСОНАЖА БЕЗ РАМКИ */
-        .avatar-container {
-            margin: 40px 0; /* Увеличил отступ */
-            /* УБРАТЬ ВСЕ ЧЕРНЫЕ КВАДРАТЫ И РАМКИ
-               Контейнер теперь полностью прозрачен
-            */
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            line-height: 0; /* Чтобы не было лишних отступов */
+        .character-container img {
+            width: 250px;
+            /* mix-blend-mode убирает черный фон с JPG, оставляя только голову персонажа */
+            mix-blend-mode: screen;
+            /* Здесь нет рамок, квадратов и свечения */
         }
 
-        .avatar-img {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border: none; /* УБРАТЬ РАМКУ У ИЗОБРАЖЕНИЯ */
-            /* СВЕЧЕНИЕ К КРАЯМ ПЕРСОНАЖА, А НЕ К РАМКЕ */
-            filter: drop-shadow(0 0 15px rgba(0, 240, 255, 0.5)); 
-        }
-
-        /* СЕТКА С ЦЕНТРИРОВАННЫМИ КНОПКАМИ */
-        .grid-container {
+        /* Стили для кнопок (оставляем как было) */
+        .button-grid {
             display: flex;
-            flex-wrap: wrap; /* Чтобы элементы переносились */
-            justify-content: center; /* Центрировать элементы внутри сетки */
             gap: 20px;
-            max-width: 900px; /* Максимальная ширина сетки */
-            width: 100%; /* Занимать всю доступную ширину до макс. */
-            margin: 30px auto; /* ГАРАНТИЯ ЦЕНТРИРОВАНИЯ СЕТКИ */
-            padding: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 900px;
         }
 
-        /* СТИЛЬ КИБЕР-КНОПОК */
-        .cyber-link {
-            display: block;
-            position: relative;
-            padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.85); /* Затемненный фон кнопок */
-            border: 1px solid var(--cyan); /* Циан-контур */
-            color: var(--cyan);
+        .btn {
+            border: 1px solid #00fbff;
+            background: rgba(0, 0, 0, 0.7);
+            color: #00fbff;
+            padding: 15px;
+            text-align: center;
             text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            text-align: center;
-            text-transform: uppercase;
-            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-            transition: all 0.2s ease-in-out;
-            width: 250px; /* Фиксированная ширина карточек */
+            min-width: 180px;
+            font-size: 14px;
         }
 
-        /* ДОПОЛНИТЕЛЬНЫЙ ТЕКСТ В КНОПКАХ */
-        .cyber-link span {
+        .btn.preset {
+            border-color: #ff0000;
+            color: #ff0000;
+        }
+
+        .btn-label {
             display: block;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 5px;
-            text-transform: none;
-        }
-
-        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
-        .cyber-link:hover {
-            background: var(--cyan);
-            color: var(--dark);
-            box-shadow: 0 0 20px var(--cyan);
-            transform: translateY(-3px);
-        }
-
-        .cyber-link:hover span {
-            color: var(--dark);
-        }
-
-        /* СПЕЦИАЛЬНАЯ КНОПКА ДЛЯ ОСНОВНОГО РЕПОЗИТОРИЯ (неоновый розовый) */
-        .cyber-link.accent {
-            border-color: var(--pink);
-            color: var(--pink);
-            text-shadow: 0 0 5px var(--pink);
-        }
-        
-        .cyber-link.accent:hover {
-            background: var(--pink);
-            color: var(--dark);
-            box-shadow: 0 0 20px var(--pink);
-        }
-
-        /* ФУТЕР */
-        footer {
-            margin-top: auto;
-            padding: 20px;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #555;
-            letter-spacing: 2px;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
             text-transform: uppercase;
+        }
+
+        .btn-subtext {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .memory-btn {
+            margin-top: 20px;
+            width: 440px;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-layer"></div>
-    <div class="overlay"></div>
-    <div class="scanline"></div>
+    <div class="header">
+        Microcot // Terminal
+    </div>
 
-    <header>
-        <div class="sys-title">MICROCOT // TERMINAL</div>
-    </header>
+    <div class="character-container">
+        <img src="char.jpg" alt="Character">
+    </div>
 
-    <main class="main-content">
-        
-        <div class="avatar-container">
-            <img src="char.jpg" alt="Microcot Avatar" class="avatar-img">
-        </div>
+    <div class="button-grid">
+        <a href="https://github.com/aimicrocot" class="btn preset">
+            <span class="btn-label">Пресет</span>
+            <span class="btn-subtext">[ github.com/aimicrocot ]</span>
+        </a>
 
-        <div class="grid-container">
-            
-            <a href="https://github.com/aimicrocot" target="_blank" class="cyber-link accent">
-                Пресет
-                <span>[ github.com/aimicrocot ]</span>
-            </a>
+        <a href="#" class="btn">
+            <span class="btn-label">Промптинг Гайд</span>
+            <span class="btn-subtext">[ RP Guide SillyTavern ]</span>
+        </a>
 
-            <a href="https://github.com/aimicrocot/promting-rp-guide-sillytavern" target="_blank" class="cyber-link">
-                Промтинг гайд
-                <span>[ RP Guide SillyTavern ]</span>
-            </a>
+        <a href="#" class="btn">
+            <span class="btn-label">Расширение: Токены</span>
+            <span class="btn-subtext">[ Tokens-Count ]</span>
+        </a>
+    </div>
 
-            <a href="https://github.com/aimicrocot/Tokens-Count" target="_blank" class="cyber-link">
-                Расширение: Токены
-                <span>[ Tokens-Count ]</span>
-            </a>
-
-            <a href="https://github.com/aimicrocot/Scenarios-Extension" target="_blank" class="cyber-link">
-                Расширение: Сценарии
-                <span>[ Scenarios-Extension ]</span>
-            </a>
-
-            <a href="https://github.com/aimicrocot/Facts-Memory-Tracker" target="_blank" class="cyber-link">
-                Memory Tracker
-                <span>[ Facts-Memory-Tracker ]</span>
-            </a>
-
-        </div>
-
-    </main>
-
-    <footer>
-        [ SYS.VER 1.0.0_ST // SECURE CONNECTION ESTABLISHED ]
-    </footer>
+    <a href="#" class="btn memory-btn">
+        <span class="btn-label">Расширение: Memory</span>
+    </a>
 
 </body>
 </html>
