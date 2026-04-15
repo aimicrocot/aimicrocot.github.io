@@ -1,227 +1,50 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MICROCOT</title>
+<meta charset="UTF-8">
+<title>Micro Cot</title>
+<style>
+  body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    /* Настройки неоновой обводки */
+    border-radius: 20px; /* Скругление углов */
+    border: 3px solid #00fbff; /* Цвет самой линии */
     
-    <style>
-        :root {
-            --cyan: #00f0ff;
-            --pink: #ff003c;
-            --dark: #080808;
-            --panel-bg: rgba(8, 8, 8, 0.85);
-        }
+    /* Эффект свечения: внешнее и внутреннее */
+    box-shadow: 0 0 15px #00fbff, 
+                0 0 30px #00fbff, 
+                inset 0 0 10px #00fbff;
+    
+    /* Анимация пульсации для красоты */
+    animation: neon-glow 2s infinite alternate;
+  }
 
-        * { 
-            margin: 0;
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-
-        body {
-            background-color: var(--dark);
-            color: var(--cyan);
-            font-family: 'Share Tech Mono', monospace;
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* ФОНОВЫЙ АРТ И ЭФФЕКТЫ */
-        .bg-layer {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: url('bg.jpg') center/cover no-repeat;
-            opacity: 0.35;
-            z-index: -2;
-        }
-
-        /* ЭФФЕКТ ПОЛОС (SCANLINES) */
-        .scanline {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(to bottom, transparent 50%, rgba(0, 240, 255, 0.05) 51%);
-            background-size: 100% 4px;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* ШАПКА / ЛОГОТИП */
-        header {
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 2px solid var(--cyan);
-            background: var(--panel-bg);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-            margin-bottom: 20px;
-        }
-
-        .sys-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: 4px;
-            text-shadow: 0 0 10px var(--cyan);
-        }
-
-        /* ГЛАВНЫЙ КОНТЕЙНЕР */
-        .main-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 1000px;
-            padding: 20px;
-            z-index: 1;
-        }
-
-        /* --- АВАТАР ПЕРСОНАЖА (ИЗ ФАЙЛА 1) --- */
-        .character-container {
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            /* Создаем темное пятно за персонажем, чтобы он не просвечивал */
-            background: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
-            padding: 20px;
-        }
-
-        .character-container img {
-            width: 300px;
-            mix-blend-mode: screen;
-            /* Усиливаем яркость самого персонажа, чтобы он был сочнее */
-            filter: brightness(1.1) contrast(1.1);
-        }
-
-        /* --- СЕТКА КНОПОК (ЦЕНТРИРОВАНИЕ) --- */
-        .links-container {
-            display: flex;
-            flex-wrap: wrap; /* Позволяет кнопкам переноситься на новую строку */
-            justify-content: center; /* Идеальное центрирование всех кнопок */
-            gap: 20px;
-            width: 100%;
-            max-width: 900px;
-            margin-top: 30px;
-            padding: 20px;
-        }
-
-        /* --- СТИЛЬ КИБЕР-КНОПОК (ИЗ ФАЙЛА 2) --- */
-        .cyber-link {
-            display: block;
-            position: relative;
-            width: 260px; /* Фиксированная ширина для ровного отображения во flex-контейнере */
-            padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid var(--cyan);
-            color: var(--cyan);
-            text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            text-align: center;
-            text-transform: uppercase;
-            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
-            transition: all 0.2s ease-in-out;
-        }
-
-        .cyber-link span {
-            display: block;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 5px;
-            text-transform: none;
-        }
-
-        .cyber-link:hover {
-            background: var(--cyan);
-            color: var(--dark);
-            box-shadow: 0 0 20px var(--cyan);
-            transform: translateY(-3px);
-        }
-
-        .cyber-link:hover span {
-            color: var(--dark);
-        }
-
-        /* СПЕЦИАЛЬНАЯ КНОПКА (АКЦЕНТ) */
-        .cyber-link.accent {
-            border-color: var(--pink);
-            color: var(--pink);
-            text-shadow: 0 0 5px var(--pink);
-        }
-        
-        .cyber-link.accent:hover {
-            background: var(--pink);
-            color: var(--dark);
-            box-shadow: 0 0 20px var(--pink);
-        }
-
-        /* ФУТЕР */
-        footer {
-            margin-top: auto;
-            padding: 20px;
-            text-align: center;
-            font-size: 0.9rem;
-            color: var(--cyan);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-    </style>
+  @keyframes neon-glow {
+    from {
+      box-shadow: 0 0 10px #00fbff, 0 0 20px #00fbff, inset 0 0 5px #00fbff;
+    }
+    to {
+      box-shadow: 0 0 25px #00fbff, 0 0 50px #00fbff, inset 0 0 15px #00fbff;
+    }
+  }
+</style>
 </head>
 <body>
 
-    <div class="bg-layer"></div>
-    <div class="scanline"></div>
-
-    <header>
-        <div class="sys-title">MICROCOT</div>
-    </header>
-
-    <main class="main-content">
-        
-        <div class="character-container">
-            <img src="char.jpg" alt="Microcot Avatar">
-        </div>
-
-        <div class="links-container">
-            <a href="https://github.com/aimicrocot/microcot-preset" target="_blank" class="cyber-link">
-                Мой пресет
-                <span>[ промты и регексы ]</span>
-            </a>
-
-            <a href="https://github.com/aimicrocot/promting-rp-guide-sillytavern" target="_blank" class="cyber-link">
-                Промтинг
-                <span>[ гайд ]</span>
-            </a>
-
-            <a href="https://github.com/aimicrocot/Tokens-Count" target="_blank" class="cyber-link">
-                Токенайзер
-                <span>[ расширение ]</span>
-            </a>
-
-            <a href="https://github.com/aimicrocot/Scenarios-Extension" target="_blank" class="cyber-link">
-                Сценарии
-                <span>[ расширение ]</span>
-            </a>
-
-            <a href="https://github.com/aimicrocot/Facts-Memory-Tracker" target="_blank" class="cyber-link">
-                Саммари
-                <span>[ в работе ]</span>
-            </a>
-        </div>
-
-    </main>
-
-    <footer>
-        [ SYS.VER 1.0.0_ST // SECURE CONNECTION ESTABLISHED ]
-    </footer>
+<img src="char.jpg" alt="Character">
 
 </body>
 </html>
