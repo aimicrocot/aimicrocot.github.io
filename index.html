@@ -3,136 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MICROCOT // TERMINAL</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            /* Затемняем фон с помощью линейного градиента поверх картинки */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('bg.jpg');
-            background-color: black;
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #00fbff;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .header {
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-top: 30px;
-            font-size: 2.5em;
-            text-shadow: 0 0 15px #00fbff;
-        }
-
-        .character-container {
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            /* Создаем темное пятно за персонажем, чтобы он не просвечивал */
-            background: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
-            padding: 20px;
-        }
-
-        .character-container img {
-            width: 300px;
-            mix-blend-mode: screen;
-            /* Усиливаем яркость самого персонажа, чтобы он был сочнее */
-            filter: brightness(1.1) contrast(1.1);
-        }
-
-        .button-grid {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            max-width: 900px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            border: 1px solid #00fbff;
-            background: rgba(0, 0, 0, 0.8);
-            color: #00fbff;
-            padding: 15px;
-            text-align: center;
-            text-decoration: none;
-            min-width: 200px;
-            transition: 0.3s;
-            box-shadow: inset 0 0 10px rgba(0, 251, 255, 0.2);
-        }
-
-        .btn:hover {
-            background: rgba(0, 251, 255, 0.1);
-            box-shadow: 0 0 15px #00fbff;
-        }
-
-        .btn.preset {
-            border-color: #ff0000;
-            color: #ff0000;
-            box-shadow: inset 0 0 10px rgba(255, 0, 0, 0.2);
-        }
-
-        .btn.preset:hover {
-            background: rgba(255, 0, 0, 0.1);
-            box-shadow: 0 0 15px #ff0000;
-        }
-
-        .btn-label {
-            display: block;
-            font-weight: bold;
-            font-size: 18px;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-
-        .btn-subtext {
-            font-size: 12px;
-            opacity: 0.8;
-        }
-
-        .memory-btn {
-            margin-top: 20px;
-            width: 440px;
-        }
-    </style>
-</head>
+    <title>Microcot Hub</title>
+    <link rel="stylesheet" href="style.css"> </head>
 <body>
 
-    <div class="header">
-        Microcot // Terminal
-    </div>
-
-    <div class="character-container">
-        <img src="char.jpg" alt="Character">
-    </div>
-
-    <div class="button-grid">
-        <a href="https://github.com/aimicrocot" class="btn preset">
-            <span class="btn-label">Пресет</span>
-            <span class="btn-subtext">[ github.com/aimicrocot ]</span>
+    <div class="main-container">
+        <a href="https://github.com/aimicrocot" class="cyber-button red">
+            <span class="glitch-text">ПРЕСЕТ</span>
+            <span class="sub-text">[ github.com/aimicrocot ]</span>
         </a>
 
-        <a href="#" class="btn">
-            <span class="btn-label">Промптинг Гайд</span>
-            <span class="btn-subtext">[ RP Guide SillyTavern ]</span>
+        <a href="#" class="cyber-button cyan">
+            <span class="glitch-text">ПРОМТИНГ ГАЙД</span>
+            <span class="sub-text">[ RP Guide SillyTavern ]</span>
         </a>
 
-        <a href="#" class="btn">
-            <span class="btn-label">Расширение: Токены</span>
-            <span class="btn-subtext">[ Tokens-Count ]</span>
+        <a href="#" class="cyber-button cyan">
+            <span class="glitch-text">РАСШИРЕНИЕ: ТОКЕНЫ</span>
+            <span class="sub-text">[ Tokens-Count ]</span>
         </a>
+
+        <a href="#" class="cyber-button cyan">
+            <span class="glitch-text">РАСШИРЕНИЕ: СЦЕНАРИИ</span>
+            <span class="sub-text">[ Scenarios-Extension ]</span>
+        </a>
+
+        <a href="#" class="cyber-button cyan">
+            <span class="glitch-text">MEMORY TRACKER</span>
+            <span class="sub-text">[ Facts-Memory-Tracker ]</span>
+        </a>
+
+        <div class="footer-text">
+            [ SYS.VER 1.0.0_ST // SECURE CONNECTION ESTABLISHED ]
+        </div>
     </div>
-
-    <a href="#" class="btn memory-btn">
-        <span class="btn-label">Расширение: Memory</span>
-    </a>
 
 </body>
 </html>
