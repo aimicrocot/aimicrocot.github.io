@@ -83,28 +83,45 @@
             z-index: 1;
         }
 
-        /* --- АВАТАР ПЕРСОНАЖА (ИЗ ФАЙЛА 1) --- */
+        /* --- АВАТАР ПЕРСОНАЖА С РАМКОЙ --- */
         .character-container {
             margin: 20px 0;
             display: flex;
             justify-content: center;
-            /* Создаем темное пятно за персонажем, чтобы он не просвечивал */
-            background: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
             padding: 20px;
         }
 
-        .character-container img {
-            width: 300px;
+        /* Новая киберпанк-рамка для аватара */
+        .character-frame {
+            position: relative;
+            background: rgba(0, 0, 0, 0.85);
+            border: 2px solid var(--cyan);
+            /* Внешнее и внутреннее неоновое свечение */
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.6), inset 0 0 15px rgba(0, 240, 255, 0.3);
+            /* Срезаем углы, как у кнопок */
+            clip-path: polygon(25px 0, 100% 0, 100% calc(100% - 25px), calc(100% - 25px) 100%, 0 100%, 0 25px);
+            padding: 15px; /* Отступ от картинки до рамки */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .character-frame img {
+            display: block;
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            /* Срезаем углы самой картинке, чтобы она повторяла форму рамки */
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
             mix-blend-mode: screen;
-            /* Усиливаем яркость самого персонажа, чтобы он был сочнее */
             filter: brightness(1.1) contrast(1.1);
         }
 
         /* --- СЕТКА КНОПОК (ЦЕНТРИРОВАНИЕ) --- */
         .links-container {
             display: flex;
-            flex-wrap: wrap; /* Позволяет кнопкам переноситься на новую строку */
-            justify-content: center; /* Идеальное центрирование всех кнопок */
+            flex-wrap: wrap; 
+            justify-content: center; 
             gap: 20px;
             width: 100%;
             max-width: 900px;
@@ -112,11 +129,11 @@
             padding: 20px;
         }
 
-        /* --- СТИЛЬ КИБЕР-КНОПОК (ИЗ ФАЙЛА 2) --- */
+        /* --- СТИЛЬ КИБЕР-КНОПОК --- */
         .cyber-link {
             display: block;
             position: relative;
-            width: 260px; /* Фиксированная ширина для ровного отображения во flex-контейнере */
+            width: 260px; 
             padding: 15px 20px;
             background: rgba(0, 0, 0, 0.85);
             border: 1px solid var(--cyan);
@@ -187,41 +204,10 @@
     <main class="main-content">
         
         <div class="character-container">
-            <img src="char.jpg" alt="Microcot Avatar">
+            <div class="character-frame">
+                <img src="char.jpg" alt="Microcot Avatar">
+            </div>
         </div>
 
         <div class="links-container">
-            <a href="https://github.com/aimicrocot" target="_blank" class="cyber-link accent">
-                Пресет
-                <span>[ github.com/aimicrocot ]</span>
-            </a>
-
-            <a href="https://github.com/aimicrocot/promting-rp-guide-sillytavern" target="_blank" class="cyber-link">
-                Промтинг гайд
-                <span>[ RP Guide SillyTavern ]</span>
-            </a>
-
-            <a href="https://github.com/aimicrocot/Tokens-Count" target="_blank" class="cyber-link">
-                Расширение: Токены
-                <span>[ Tokens-Count ]</span>
-            </a>
-
-            <a href="https://github.com/aimicrocot/Scenarios-Extension" target="_blank" class="cyber-link">
-                Расширение: Сценарии
-                <span>[ Scenarios-Extension ]</span>
-            </a>
-
-            <a href="https://github.com/aimicrocot/Facts-Memory-Tracker" target="_blank" class="cyber-link">
-                Memory Tracker
-                <span>[ Facts-Memory-Tracker ]</span>
-            </a>
-        </div>
-
-    </main>
-
-    <footer>
-        [ SYS.VER 1.0.0_ST // SECURE CONNECTION ESTABLISHED ]
-    </footer>
-
-</body>
-</html>
+            <a href="
