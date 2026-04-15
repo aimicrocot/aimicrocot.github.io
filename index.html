@@ -8,8 +8,8 @@
         body {
             margin: 0;
             padding: 0;
-            /* Затемняем фон с помощью линейного градиента поверх картинки */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('bg.jpg');
+            /* Приглушаем фон для лучшей видимости */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('bg.jpg');
             background-color: black;
             background-size: cover;
             background-position: center;
@@ -35,16 +35,21 @@
             margin: 20px 0;
             display: flex;
             justify-content: center;
-            /* Создаем темное пятно за персонажем, чтобы он не просвечивал */
-            background: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
+            /* Пятно подложки делаем чуть слабее, чтобы не было резкого круга */
+            background: radial-gradient(circle, rgba(0,0,0,0.9) 20%, rgba(0,0,0,0) 70%);
             padding: 20px;
         }
 
         .character-container img {
             width: 300px;
-            mix-blend-mode: screen;
-            /* Усиливаем яркость самого персонажа, чтобы он был сочнее */
-            filter: brightness(1.1) contrast(1.1);
+            mix-blend-mode: screen; /* Убирает черный фон JPG */
+            
+            /* МАГИЯ СВЕЧЕНИЯ ПО КОНТУРУ:
+               Используем drop-shadow вместо box-shadow. 
+               Он "обволакивает" светлые части картинки (персонажа), игнорируя черный фон. */
+            filter: brightness(1.1) contrast(1.1) 
+                    drop-shadow(0 0 10px #00fbff) 
+                    drop-shadow(0 0 20px rgba(0, 251, 255, 0.5));
         }
 
         .button-grid {
@@ -58,7 +63,7 @@
 
         .btn {
             border: 1px solid #00fbff;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             color: #00fbff;
             padding: 15px;
             text-align: center;
@@ -69,8 +74,9 @@
         }
 
         .btn:hover {
-            background: rgba(0, 251, 255, 0.1);
+            background: rgba(0, 251, 255, 0.15);
             box-shadow: 0 0 15px #00fbff;
+            transform: translateY(-2px);
         }
 
         .btn.preset {
@@ -80,7 +86,7 @@
         }
 
         .btn.preset:hover {
-            background: rgba(255, 0, 0, 0.1);
+            background: rgba(255, 0, 0, 0.15);
             box-shadow: 0 0 15px #ff0000;
         }
 
