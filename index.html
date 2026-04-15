@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MICROCOT // TERMINAL</title>
     <style>
-        /* Оставляем общие настройки страницы и затемнение фона */
         body {
             margin: 0;
             padding: 0;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('bg.jpg');
+            /* Затемняем фон с помощью линейного градиента поверх картинки */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('bg.jpg');
             background-color: black;
             background-size: cover;
             background-position: center;
@@ -31,27 +31,22 @@
             text-shadow: 0 0 15px #00fbff;
         }
 
-        /* Обновленный блок для персонажа */
         .character-container {
-            margin: 30px 0;
+            margin: 20px 0;
             display: flex;
             justify-content: center;
-            /* Убрали фон и padding из прошлого шага */
+            /* Создаем темное пятно за персонажем, чтобы он не просвечивал */
+            background: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%);
+            padding: 20px;
         }
 
         .character-container img {
             width: 300px;
-            /* Убрали mix-blend-mode */
-            
-            /* КЛЮЧЕВОЙ МОМЕНТ: Добавляем неоновое свечение по контуру прозрачного PNG.
-               drop-shadow, в отличие от box-shadow, повторяет форму картинки, а не прямоугольник.
-               Мы используем два слоя drop-shadow для глубины свечения. */
-            filter: 
-                drop-shadow(0 0 5px #00fbff)    /* Тонкий, яркий внутренний контур */
-                drop-shadow(0 0 15px rgba(0, 251, 255, 0.7)); /* Более широкое, мягкое свечение */
+            mix-blend-mode: screen;
+            /* Усиливаем яркость самого персонажа, чтобы он был сочнее */
+            filter: brightness(1.1) contrast(1.1);
         }
 
-        /* Остальные стили кнопок оставляем без изменений */
         .button-grid {
             display: flex;
             gap: 20px;
