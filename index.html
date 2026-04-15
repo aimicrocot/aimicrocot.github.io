@@ -3,40 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Microcot Hub</title>
-    <link rel="stylesheet" href="style.css"> </head>
+    <title>MICROCOT // CYBER_HUB</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --cyan: #00f0ff;
+            --pink: #ff003c;
+            --dark: #080808;
+            --panel-bg: rgba(8, 8, 8, 0.85);
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--cyan);
+            font-family: 'Share Tech Mono', monospace;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ФОНОВЫЙ АРТ И ЭФФЕКТЫ */
+        .bg-layer {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('bg.jpg') center/cover no-repeat;
+            opacity: 0.35;
+            z-index: -2;
+        }
+
+        /* ЭФФЕКТ ПОЛОС (SCANLINES) */
+        .scanline {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 240, 255, 0.05) 51%);
+            background-size: 100% 4px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* ШАПКА / ЛОГОТИП */
+        header {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--cyan);
+            background: var(--panel-bg);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .sys-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px var(--cyan);
+        }
+
+        /* ГЛАВНЫЙ КОНТЕЙНЕР */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            z-index: 1;
+        }
+
+        /* АВАТАР ПЕРСОНАЖА */
+        .avatar-container {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .avatar-img {
+            max-width: 350px;
+            width: 100%;
+            height: auto;
+            border-bottom: 3px solid var(--cyan);
+            filter: drop-shadow(0 0 20px rgba(0, 240, 255, 0.3));
+        }
+
+        /* БЛОК С КНОПКАМИ */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* СТИЛЬ КИБЕР-КНОПОК */
+        .cyber-link {
+            display: block;
+            position: relative;
+            padding: 15px 20px;
+            background: var(--panel-bg);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            text-align: center;
+            text-transform: uppercase;
+            /* Скошенные углы (Cyberpunk style) */
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            transition: all 0.2s ease-in-out;
+        }
+
+        /* ДОПОЛНИТЕЛЬНЫЙ ТЕКСТ В КНОПКАХ */
+        .cyber-link span {
+            display: block;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+            text-transform: none;
+        }
+
+        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
+        .cyber-link:hover {
+            background: var(--cyan);
+            color: var(--dark);
+            box-shadow: 0 0 20px var(--cyan);
+            transform: translateY(-3px);
+        }
+
+        .cyber-link:hover span {
+            color: var(--dark);
+        }
+
+        /* СПЕЦИАЛЬНАЯ КНОПКА ДЛЯ ОСНОВНОГО РЕПОЗИТОРИЯ */
+        .cyber-link.accent {
+            border-color: var(--pink);
+            color: var(--pink);
+            text-shadow: 0 0 5px var(--pink);
+        }
+        
+        .cyber-link.accent:hover {
+            background: var(--pink);
+            color: var(--dark);
+            box-shadow: 0 0 20px var(--pink);
+        }
+
+        /* ФУТЕР */
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+        }
+    </style>
+</head>
 <body>
 
-    <div class="main-container">
-        <a href="https://github.com/aimicrocot" class="cyber-button red">
-            <span class="glitch-text">ПРЕСЕТ</span>
-            <span class="sub-text">[ github.com/aimicrocot ]</span>
-        </a>
+    <div class="bg-layer"></div>
+    <div class="scanline"></div>
 
-        <a href="#" class="cyber-button cyan">
-            <span class="glitch-text">ПРОМТИНГ ГАЙД</span>
-            <span class="sub-text">[ RP Guide SillyTavern ]</span>
-        </a>
+    <header>
+        <div class="sys-title">MICROCOT // TERMINAL</div>
+    </header>
 
-        <a href="#" class="cyber-button cyan">
-            <span class="glitch-text">РАСШИРЕНИЕ: ТОКЕНЫ</span>
-            <span class="sub-text">[ Tokens-Count ]</span>
-        </a>
-
-        <a href="#" class="cyber-button cyan">
-            <span class="glitch-text">РАСШИРЕНИЕ: СЦЕНАРИИ</span>
-            <span class="sub-text">[ Scenarios-Extension ]</span>
-        </a>
-
-        <a href="#" class="cyber-button cyan">
-            <span class="glitch-text">MEMORY TRACKER</span>
-            <span class="sub-text">[ Facts-Memory-Tracker ]</span>
-        </a>
-
-        <div class="footer-text">
-            [ SYS.VER 1.0.0_ST // SECURE CONNECTION ESTABLISHED ]
+    <main class="main-content">
+        
+        <div class="avatar-container">
+            <img src="char.jpg" alt="Microcot Avatar" class="avatar-img">
         </div>
-    </div>
+
+        <div class="links-grid">
+            
+            <a href="https://github.com/aimicrocot" target="_blank" class="cyber-link accent">
+                Пресет
+                <span>[ github.com/aimicrocot ]</span>
+            </a>
+
+            <a href="https://github.com/aimicrocot/promting-rp-guide-sillytavern" target="_blank" class="cyber-link">
+                Промтинг гайд
+                <span>[ RP Guide SillyTavern ]</span>
+            </a>
+
+            <a href="https://github.com/aimicrocot/Tokens-Count" target="_blank" class="cyber-link">
+                Расширение: Токены
+                <span>[ Tokens-Count ]</span>
+            </a>
+
+            <a href="https://github.com/aimicrocot/Scenarios-Extension" target="_blank" class="cyber-link">
+                Расширение: Сценарии
+                <span>[ Scenarios-Extension ]</span>
+            </a>
+
+            <a href="https://github.com/aimicrocot/Facts-Memory-Tracker" target="_blank" class="cyber-link">
+                Расширение: Memory Tracker
+                <span>[ Facts-Memory-Tracker ]</span>
+            </a>
+
+        </div>
+
+    </main>
+
+    <footer>
+        SYS.VER 1.0.0_ST // SECURE CONNECTION ESTABLISHED
+    </footer>
 
 </body>
 </html>
