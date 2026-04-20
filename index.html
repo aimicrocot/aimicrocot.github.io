@@ -343,26 +343,26 @@ function showMain() {
 
 setTimeout(addLog, 300);
 
-function spawnParticles() {
-  const colors = ['#00f5ff','#ff2d78','#b400ff','#00ff88'];
-  for (let i = 0; i < 28; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const size = Math.random() * 3 + 1;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;bottom:0;background:${color};box-shadow:0 0 6px ${color};animation-duration:${9+Math.random()*14}s;animation-delay:${Math.random()*10}s;`;
-    document.body.appendChild(p);
-  }
-}
+function spawnParticles() {}
 
 function spawnSparks() {
   const colors = ['#00f5ff','#ff2d78','#b400ff','#ffcc00','#00ff88'];
-  for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < 120; i++) {
     const s = document.createElement('div');
-    s.className = 'particle';
-    const size = Math.random() * 2.5 + 0.5;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    s.style.cssText = `width:${size}px;height:${size*4}px;border-radius:2px;left:${Math.random()*100}%;bottom:0;background:${color};box-shadow:0 0 6px ${color};animation-duration:${4+Math.random()*8}s;animation-delay:${Math.random()*8}s;`;
+    s.style.cssText = `
+      position:fixed;
+      pointer-events:none;
+      z-index:0;
+      border-radius:2px;
+      width:${Math.random() * 1.5 + 0.5}px;
+      height:${Math.random() * 40 + 10}px;
+      left:${Math.random() * 100}%;
+      bottom:0;
+      background:${colors[Math.floor(Math.random() * colors.length)]};
+      box-shadow:0 0 6px ${colors[Math.floor(Math.random() * colors.length)]};
+      opacity:0;
+      animation:streakUp ${3 + Math.random() * 6}s linear ${Math.random() * 10}s infinite;
+    `;
     document.body.appendChild(s);
   }
 }
