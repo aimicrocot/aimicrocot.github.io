@@ -369,23 +369,11 @@ function spawnParticles() {
   }
 }
 
-function spawnSparks() {
-  const colors = ['#00f5ff','#ff2d78','#b400ff','#ffcc00','#00ff88'];
-  for (let i = 0; i < 80; i++) {
-    const s = document.createElement('div');
-    s.className = 'particle';
-    const size = Math.random() * 2.5 + 0.5;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    s.style.cssText = `
-      width:${size}px;height:${size*4}px;border-radius:2px;
-      left:${Math.random()*100}%;bottom:0;
-      background:${color};
-      box-shadow:0 0 6px ${color};
-      animation-duration:${4+Math.random()*8}s;
-      animation-delay:${Math.random()*8}s;
-    `;
-    document.body.appendChild(s);
-  }
+@keyframes floatParticle {
+  0%   { transform: translateY(100vh) scale(0); opacity: 0; } /* 100vh - это самый низ экрана */
+  10%  { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-50px) scale(1); opacity: 0; } /* -50px - это выше верхнего края */
 }
 
 const logo = document.querySelector('.logo');
