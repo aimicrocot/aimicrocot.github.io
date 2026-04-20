@@ -6,164 +6,53 @@
 <title>MICROCOT</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-:root {
-  --c: #00f5ff;
-  --p: #ff2d78;
-  --v: #b400ff;
-  --bg: #020510;
-  --gc: 0 0 8px #00f5ff, 0 0 24px #00f5ff44;
-  --gp: 0 0 8px #ff2d78, 0 0 24px #ff2d7844;
-}
+:root{--c:#00f5ff;--p:#ff2d78;--v:#b400ff;--bg:#020510;--gc:0 0 8px #00f5ff,0 0 24px #00f5ff44;--gp:0 0 8px #ff2d78,0 0 24px #ff2d7844}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow-x:hidden}
 body{background:var(--bg);color:#c8e8ff;font-family:'Share Tech Mono',monospace}
 
-#loader{
-  position:fixed;inset:0;z-index:999;
-  background:var(--bg);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:30px 20px;
-  transition:opacity .6s ease;
-}
+#loader{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;transition:opacity .6s ease}
 #loader.hide{opacity:0;pointer-events:none}
-.boot-title{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(1rem,4vw,1.6rem);
-  color:var(--c);
-  text-shadow:var(--gc);
-  letter-spacing:.2em;
-  margin-bottom:28px;
-}
-.boot-bar-wrap{
-  width:min(400px,90vw);
-  height:4px;
-  background:rgba(0,245,255,.12);
-  border:1px solid rgba(0,245,255,.25);
-  margin-bottom:24px;
-  position:relative;overflow:hidden;
-}
-.boot-bar-fill{
-  height:100%;
-  background:linear-gradient(90deg,var(--v),var(--c));
-  box-shadow:0 0 10px var(--c);
-  width:0%;
-  transition:width .05s linear;
-}
-.log-box{
-  width:min(440px,92vw);
-  height:160px;
-  overflow:hidden;
-  border:1px solid rgba(0,245,255,.15);
-  padding:10px 14px;
-  font-size:clamp(.6rem,1.4vw,.72rem);
-  line-height:1.7;
-  background:rgba(0,10,25,.7);
-}
+.boot-title{font-family:'Orbitron',sans-serif;font-size:clamp(1rem,4vw,1.6rem);color:var(--c);text-shadow:var(--gc);letter-spacing:.2em;margin-bottom:28px}
+.boot-bar-wrap{width:min(400px,90vw);height:4px;background:rgba(0,245,255,.12);border:1px solid rgba(0,245,255,.25);margin-bottom:24px;overflow:hidden}
+.boot-bar-fill{height:100%;background:linear-gradient(90deg,var(--v),var(--c));box-shadow:0 0 10px var(--c);width:0%;transition:width .05s linear}
+.log-box{width:min(440px,92vw);height:160px;overflow:hidden;border:1px solid rgba(0,245,255,.15);padding:10px 14px;font-size:clamp(.6rem,1.4vw,.72rem);line-height:1.7;background:rgba(0,10,25,.7)}
 .log-line{opacity:0;animation:logPop .25s ease forwards}
 @keyframes logPop{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
-.log-ok{color:var(--c)}
-.log-warn{color:#ffcc00}
-.log-err{color:var(--p)}
-.log-sys{color:rgba(200,232,255,.45)}
+.log-ok{color:var(--c)}.log-warn{color:#ffcc00}.log-err{color:var(--p)}.log-sys{color:rgba(200,232,255,.45)}
 
-#main{
-  opacity:0;
-  transition:opacity .7s ease;
-  pointer-events:none;
-  position:relative;z-index:1;
-  min-height:100vh;
-  display:flex;flex-direction:column;
-  align-items:center;
-  padding:0 16px 36px;
-}
+#main{opacity:0;transition:opacity .7s ease;pointer-events:none;position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 16px 36px}
 #main.show{opacity:1;pointer-events:auto}
 
-.bg-grid{
-  position:fixed;inset:0;z-index:0;
-  background-image:
-    linear-gradient(rgba(0,245,255,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,245,255,.035) 1px,transparent 1px);
-  background-size:36px 36px;
-  animation:gpulse 8s ease-in-out infinite;
-}
+.bg-grid{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(0,245,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,255,.035) 1px,transparent 1px);background-size:36px 36px;animation:gpulse 8s ease-in-out infinite}
 @keyframes gpulse{0%,100%{opacity:1}50%{opacity:.35}}
-.bg-scan{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.12) 2px,rgba(0,0,0,.12) 4px);
-}
-.bg-vig{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.88) 100%);
-}
+.bg-scan{position:fixed;inset:0;z-index:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.12) 2px,rgba(0,0,0,.12) 4px)}
+.bg-vig{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.88) 100%)}
 
-header{
-  position:relative;z-index:2;
-  width:100%;max-width:860px;
-  padding:22px 0 0;
-  text-align:center;
-}
-.sys-bar{
-  font-size:9px;color:var(--c);opacity:.45;
-  letter-spacing:3px;margin-bottom:10px;
-  animation:sblink 3s step-end infinite;
-}
+header{position:relative;z-index:2;width:100%;max-width:860px;padding:22px 0 0;text-align:center}
+.sys-bar{font-size:9px;color:var(--c);opacity:.45;letter-spacing:3px;margin-bottom:10px;animation:sblink 3s step-end infinite}
 @keyframes sblink{0%,100%{opacity:.45}50%{opacity:.15}}
 
-.logo{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(2.2rem,7vw,4.6rem);
-  font-weight:900;letter-spacing:.15em;
-  color:var(--c);text-shadow:var(--gc);
-  position:relative;display:inline-block;line-height:1;
-  cursor:default;user-select:none;
-}
-.logo::before{
-  content:'MICROCOT';position:absolute;inset:0;
-  color:var(--p);text-shadow:var(--gp);
-  clip-path:polygon(0 25%,100% 25%,100% 48%,0 48%);
-  animation:gl1 7s infinite;
-}
-.logo::after{
-  content:'MICROCOT';position:absolute;inset:0;
-  color:var(--v);
-  clip-path:polygon(0 60%,100% 60%,100% 78%,0 78%);
-  animation:gl2 7s infinite;
-}
+.logo{font-family:'Orbitron',sans-serif;font-size:clamp(2.2rem,7vw,4.6rem);font-weight:900;letter-spacing:.15em;color:var(--c);text-shadow:var(--gc);position:relative;display:inline-block;line-height:1;cursor:default;user-select:none}
+.logo::before{content:'MICROCOT';position:absolute;inset:0;color:var(--p);text-shadow:var(--gp);clip-path:polygon(0 25%,100% 25%,100% 48%,0 48%);animation:gl1 7s infinite}
+.logo::after{content:'MICROCOT';position:absolute;inset:0;color:var(--v);clip-path:polygon(0 60%,100% 60%,100% 78%,0 78%);animation:gl2 7s infinite}
 @keyframes gl1{0%,90%,100%{transform:translate(0);opacity:0}91%{transform:translate(-5px,2px);opacity:.9}93%{transform:translate(5px,-1px);opacity:.9}95%{transform:translate(-2px,0);opacity:.7}97%{opacity:0}}
 @keyframes gl2{0%,92%,100%{transform:translate(0);opacity:0}93%{transform:translate(4px,1px);opacity:.8}95%{transform:translate(-4px,-2px);opacity:.8}97%{transform:translate(1px,0);opacity:.5}99%{opacity:0}}
+.logo-sub{display:block;font-family:'Share Tech Mono',monospace;font-size:clamp(.48rem,1.3vw,.65rem);color:rgba(0,245,255,.45);letter-spacing:.35em;margin-top:6px}
 
-.logo-sub{
-  display:block;font-family:'Share Tech Mono',monospace;
-  font-size:clamp(.48rem,1.3vw,.65rem);
-  color:rgba(0,245,255,.45);letter-spacing:.35em;margin-top:6px;
-}
-
-.top-strip{
-  position:relative;z-index:2;
-  width:100%;max-width:680px;
-  margin:14px 0 8px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:7px 18px;
-  border:1px solid rgba(0,245,255,.18);
-  background:rgba(0,15,40,.55);
-  backdrop-filter:blur(8px);
-  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
-}
+.top-strip{position:relative;z-index:2;width:100%;max-width:680px;margin:14px 0 8px;display:flex;align-items:center;justify-content:space-between;padding:7px 18px;border:1px solid rgba(0,245,255,.18);background:rgba(0,15,40,.55);backdrop-filter:blur(8px);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px))}
 .strip-item{font-size:clamp(.52rem,1.2vw,.65rem);color:rgba(0,245,255,.55);letter-spacing:.18em}
-.strip-item span{color:var(--c);text-shadow:0 0 6px var(--c)44}
+.strip-item span{color:var(--c);text-shadow:0 0 6px rgba(0,245,255,.4)}
 .strip-dot{width:6px;height:6px;border-radius:50%;background:var(--c);box-shadow:var(--gc);animation:dotpulse 1.8s ease-in-out infinite}
 @keyframes dotpulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.4}}
 
 .avatar-section{position:relative;z-index:2;margin:16px 0 14px;display:flex;justify-content:center}
 .avatar-wrap{position:relative;width:clamp(160px,38vw,260px);animation:bounce 3s ease-in-out infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-
 .avatar-glow{position:absolute;inset:-16px;border-radius:4px;background:radial-gradient(ellipse at center,rgba(0,245,255,.18) 0%,transparent 68%);animation:aglow 3s ease-in-out infinite;z-index:0}
 .avatar-ring{position:absolute;inset:-3px;border-radius:2px;z-index:3;pointer-events:none;box-shadow:0 0 12px var(--c),0 0 28px rgba(0,245,255,.4),inset 0 0 12px rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.55);clip-path:polygon(10px 0%,calc(100% - 10px) 0%,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0% calc(100% - 10px),0% 10px);animation:rpulse 3s ease-in-out infinite}
 @keyframes rpulse{0%,100%{box-shadow:0 0 12px var(--c),0 0 28px rgba(0,245,255,.4)}50%{box-shadow:0 0 20px var(--c),0 0 50px rgba(0,245,255,.6),0 0 80px rgba(0,245,255,.2)}}
 @keyframes aglow{0%,100%{opacity:.8;transform:scale(1)}50%{opacity:.45;transform:scale(1.06)}}
-
 .avatar-img{width:100%;display:block;position:relative;z-index:2;filter:saturate(1.25) contrast(1.1);clip-path:polygon(10px 0%,calc(100% - 10px) 0%,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0% calc(100% - 10px),0% 10px)}
 .avatar-scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--c),transparent);z-index:4;animation:scnl 2.5s linear infinite;box-shadow:0 0 10px var(--c)}
 @keyframes scnl{0%{top:0%;opacity:1}85%{opacity:.8}100%{top:100%;opacity:0}}
@@ -198,15 +87,15 @@ header{
 .status{position:relative;z-index:2;margin-top:22px;font-size:clamp(.48rem,1.1vw,.6rem);color:var(--c);opacity:.4;letter-spacing:.22em;text-align:center;animation:stpulse 4s ease-in-out infinite}
 @keyframes stpulse{0%,100%{opacity:.4}50%{opacity:.18}}
 
-.particle{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:fup linear infinite}
-@keyframes fup{0%{transform:translateY(0) scale(0);opacity:0}8%{opacity:1}88%{opacity:.5}100%{transform:translateY(-100vh) scale(1);opacity:0}}
-.spark{position:fixed;pointer-events:none;z-index:0;animation:sparkfly linear infinite}
-@keyframes streakUp{0%{transform:translateY(0);opacity:0}5%{opacity:.9}85%{opacity:.6}100%{transform:translateY(-100vh);opacity:0}}
-@keyframes sparkfly{0%{transform:translate(0,0) rotate(0deg) scale(1);opacity:.9}100%{transform:translate(var(--sx),var(--sy)) rotate(360deg) scale(0);opacity:0}}
+/* искры снизу вверх */
+.streak{position:fixed;pointer-events:none;z-index:0;border-radius:2px;animation:streakUp linear infinite}
+@keyframes streakUp{0%{transform:translateY(100vh);opacity:0}5%{opacity:1}85%{opacity:.7}100%{transform:translateY(-60px);opacity:0}}
 
 .fi{opacity:0;animation:fup2 .6s ease forwards}
 @keyframes fup2{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@keyframes clickSpark{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--sx),var(--sy)) scale(0);opacity:0}}
+
 header{animation:fup2 .5s ease .05s both}
 .top-strip{animation:fup2 .5s ease .15s both}
 .avatar-section{animation:fup2 .5s ease .22s both}
@@ -223,6 +112,7 @@ header{animation:fup2 .5s ease .05s both}
   .strip-dot{display:none}
   .strip-item{display:flex;justify-content:space-between;width:100%;font-size:.65rem}
   .strip-item span{text-align:right}
+  header{padding:18px 0 0}
 }
 </style>
 </head>
@@ -242,12 +132,27 @@ header{animation:fup2 .5s ease .05s both}
   <header>
     <div class="sys-bar">[ NEURAL_LINK ACTIVE // IDENTITY LOADED ]</div>
     <h1 class="logo">MICROCOT</h1>
+    <span class="logo-sub">AI TOOLS &amp; EXTENSIONS FOR SILLYTAVERN</span>
   </header>
+
+  <div class="top-strip">
+    <div class="strip-item">SYS <span>ONLINE</span></div>
+    <div class="strip-dot"></div>
+    <div class="strip-item">PING <span>12ms</span></div>
+    <div class="strip-dot"></div>
+    <div class="strip-item">ACCESS <span>GRANTED</span></div>
+    <div class="strip-dot"></div>
+    <div class="strip-item">VER <span>1.0.0_ST</span></div>
+  </div>
 
   <div class="avatar-section">
     <div class="avatar-wrap">
       <div class="avatar-glow"></div>
       <div class="avatar-ring"></div>
+      <div class="hud tl">ID::MC-0x01</div>
+      <div class="hud tr">STA::ACTIVE</div>
+      <div class="hud bl">VER::1.0.0</div>
+      <div class="hud br">NET::SECURE</div>
       <div class="corner tl"></div>
       <div class="corner tr"></div>
       <div class="corner bl"></div>
@@ -315,9 +220,9 @@ const LOGS = [
 ];
 
 const logsEl = document.getElementById('logs');
-const bar = document.getElementById('bar');
+const bar    = document.getElementById('bar');
 const loader = document.getElementById('loader');
-const main = document.getElementById('main');
+const main   = document.getElementById('main');
 let logIdx = 0;
 
 function addLog() {
@@ -329,7 +234,7 @@ function addLog() {
   logsEl.appendChild(el);
   logsEl.scrollTop = logsEl.scrollHeight;
   bar.style.width = (logIdx / LOGS.length * 100) + '%';
-  setTimeout(addLog, 280 + Math.random() * 120);
+  setTimeout(addLog, 280 + Math.random() * 220);
 }
 
 function showMain() {
@@ -337,37 +242,33 @@ function showMain() {
   setTimeout(() => {
     loader.style.display = 'none';
     main.classList.add('show');
-    spawnParticles();
-    spawnSparks();
+    spawnStreaks();
   }, 650);
 }
 
 setTimeout(addLog, 300);
 
-function spawnParticles() {}
-
-function spawnSparks() {
-  const colors = ['#00f5ff','#ff2d78','#b400ff','#ffcc00','#00ff88'];
+// искры снизу вверх
+function spawnStreaks() {
+  const colors = ['#00f5ff','#ff2d78','#b400ff','#ffcc00','#00ff88','#ffffff'];
   for (let i = 0; i < 120; i++) {
     const s = document.createElement('div');
-    s.style.cssText = `
-      position:fixed;
-      pointer-events:none;
-      z-index:0;
-      border-radius:2px;
-      width:${Math.random() * 1.5 + 0.5}px;
-      height:${Math.random() * 40 + 10}px;
-      left:${Math.random() * 100}%;
-      bottom:0;
-      background:${colors[Math.floor(Math.random() * colors.length)]};
-      box-shadow:0 0 6px ${colors[Math.floor(Math.random() * colors.length)]};
-      opacity:0;
-      animation:streakUp ${3 + Math.random() * 6}s linear ${Math.random() * 10}s infinite;
-    `;
+    s.className = 'streak';
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const w = Math.random() * 1.5 + 0.5;
+    const h = Math.random() * 60 + 10;
+    s.style.cssText =
+      `width:${w}px;height:${h}px;` +
+      `left:${Math.random()*100}%;bottom:0;` +
+      `background:${color};` +
+      `box-shadow:0 0 6px ${color};` +
+      `animation-duration:${3+Math.random()*7}s;` +
+      `animation-delay:${Math.random()*12}s;`;
     document.body.appendChild(s);
   }
 }
 
+// глитч логотипа
 const logo = document.querySelector('.logo');
 let glitchTimer;
 logo.addEventListener('mouseenter', () => {
@@ -378,7 +279,7 @@ logo.addEventListener('mouseenter', () => {
 });
 logo.addEventListener('mouseleave', () => { clearInterval(glitchTimer); logo.style.transform = ''; });
 
-// ══════════ HOVER/CLICK TOOLTIPS ══════════
+// тултипы при клике
 const TIPS = [
   'neko_scan.exe :: объект идентифицирован',
   '[OK] кот одобряет этот клик',
@@ -410,26 +311,19 @@ const TIPS = [
 function showTip(e) {
   const tip = document.createElement('div');
   tip.textContent = '> ' + TIPS[Math.floor(Math.random() * TIPS.length)];
-  tip.style.cssText = `
-    position:fixed;
-    left:${Math.min(e.clientX + 12, window.innerWidth - 260)}px;
-    top:${Math.max(e.clientY - 28, 8)}px;
-    font-family:'Share Tech Mono',monospace;
-    font-size:clamp(.55rem,1.3vw,.65rem);
-    color:#00f5ff;
-    text-shadow:0 0 8px #00f5ff;
-    background:rgba(0,10,25,.88);
-    border:1px solid rgba(0,245,255,.25);
-    padding:5px 10px;
-    pointer-events:none;
-    z-index:9999;
-    white-space:nowrap;
-    clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
-    animation:tipIn .15s ease forwards;
-  `;
+  tip.style.cssText =
+    `position:fixed;` +
+    `left:${Math.min(e.clientX+12, window.innerWidth-260)}px;` +
+    `top:${Math.max(e.clientY-28, 8)}px;` +
+    `font-family:'Share Tech Mono',monospace;font-size:clamp(.55rem,1.3vw,.65rem);` +
+    `color:#00f5ff;text-shadow:0 0 8px #00f5ff;` +
+    `background:rgba(0,10,25,.88);border:1px solid rgba(0,245,255,.25);` +
+    `padding:5px 10px;pointer-events:none;z-index:9999;white-space:nowrap;` +
+    `clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));` +
+    `animation:tipIn .15s ease forwards;`;
   document.body.appendChild(tip);
   setTimeout(() => {
-    tip.style.transition = 'opacity .4s ease, transform .4s ease';
+    tip.style.transition = 'opacity .4s ease,transform .4s ease';
     tip.style.opacity = '0';
     tip.style.transform = 'translateY(-8px)';
     setTimeout(() => tip.remove(), 400);
@@ -439,22 +333,20 @@ function showTip(e) {
 document.addEventListener('click', e => {
   if (e.target.closest('#loader')) return;
   showTip(e);
-  // бонус: мини-искры при клике
+  const colors = ['#00f5ff','#ff2d78','#b400ff','#ffcc00'];
   for (let i = 0; i < 6; i++) {
     const s = document.createElement('div');
-    const color = ['#00f5ff','#ff2d78','#b400ff','#ffcc00'][Math.floor(Math.random()*4)];
-    const angle = Math.random() * 360;
-    const dist = 30 + Math.random() * 60;
-    s.style.cssText = `
-      position:fixed;
-      width:2px;height:6px;border-radius:2px;
-      left:${e.clientX}px;top:${e.clientY}px;
-      background:${color};box-shadow:0 0 4px ${color};
-      pointer-events:none;z-index:9999;
-      --sx:${Math.cos(angle*Math.PI/180)*dist}px;
-      --sy:${Math.sin(angle*Math.PI/180)*dist}px;
-      animation:sparkfly .5s ease forwards;
-    `;
+    const color = colors[Math.floor(Math.random()*4)];
+    const angle = Math.random()*360;
+    const dist = 30+Math.random()*60;
+    s.style.cssText =
+      `position:fixed;width:2px;height:7px;border-radius:2px;` +
+      `left:${e.clientX}px;top:${e.clientY}px;` +
+      `background:${color};box-shadow:0 0 4px ${color};` +
+      `pointer-events:none;z-index:9999;` +
+      `--sx:${Math.cos(angle*Math.PI/180)*dist}px;` +
+      `--sy:${Math.sin(angle*Math.PI/180)*dist}px;` +
+      `animation:clickSpark .5s ease forwards;`;
     document.body.appendChild(s);
     setTimeout(() => s.remove(), 500);
   }
