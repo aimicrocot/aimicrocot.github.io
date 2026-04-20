@@ -89,7 +89,7 @@ header{position:relative;z-index:2;width:100%;max-width:860px;padding:22px 0 0;t
 
 /* искры снизу вверх */
 .streak{position:fixed;pointer-events:none;z-index:0;border-radius:2px;animation:streakUp linear infinite}
-@keyframes streakUp{0%{transform:translateY(100vh);opacity:0}5%{opacity:1}85%{opacity:.7}100%{transform:translateY(-60px);opacity:0}}
+@keyframes matrixFloat{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:1}90%{opacity:.6}100%{transform:translateY(-100vh) translateX(calc((var(--r,0.5) - 0.5) * 60px));opacity:0}}
 
 .fi{opacity:0;animation:fup2 .6s ease forwards}
 @keyframes fup2{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
@@ -251,22 +251,26 @@ spawnStreaks();
 
 // искры снизу вверх
 function spawnStreaks() {
-  const colors = ['#00f5ff','#ff2d78','#b400ff','#ffcc00','#00ff88','#ffffff'];
-  for (let i = 0; i < 120; i++) {
+  const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノ';
+  for (let i = 0; i < 80; i++) {
     const s = document.createElement('div');
-    s.className = 'streak';
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const w = Math.random() * 1.5 + 0.5;
-    const h = Math.random() * 60 + 10;
+    s.textContent = chars[Math.floor(Math.random() * chars.length)];
     s.style.cssText =
-      `width:${w}px;height:${h}px;` +
-      `left:${Math.random()*100}%;bottom:0;` +
-      `background:${color};` +
-      `opacity:0.90;` +
-      `box-shadow:0 0 3px ${color};` +
-      `animation-duration:${5+Math.random()*9}s;` +
-      `animation-delay:${Math.random()*12}s;`;
+      `position:fixed;` +
+      `font-family:'Share Tech Mono',monospace;` +
+      `font-size:${8 + Math.random() * 6}px;` +
+      `color:#00f5ff;` +
+      `text-shadow:0 0 6px #00f5ff;` +
+      `opacity:${0.08 + Math.random() * 0.18};` +
+      `left:${Math.random() * 100}%;` +
+      `top:${Math.random() * 100}%;` +
+      `pointer-events:none;z-index:0;` +
+      `animation:matrixFloat ${4 + Math.random() * 8}s linear ${Math.random() * 5}s infinite;`;
     document.body.appendChild(s);
+
+    setInterval(() => {
+      s.textContent = chars[Math.floor(Math.random() * chars.length)];
+    }, 800 + Math.random() * 1200);
   }
 }
 
