@@ -261,8 +261,9 @@ function spawnStreaks() {
       `width:${w}px;height:${h}px;` +
       `left:${Math.random()*100}%;bottom:0;` +
       `background:${color};` +
-      `box-shadow:0 0 6px ${color};` +
-      `animation-duration:${3+Math.random()*7}s;` +
+      `opacity:0.35;` +
+      `box-shadow:0 0 3px ${color};` +
+      `animation-duration:${5+Math.random()*9}s;` +
       `animation-delay:${Math.random()*12}s;`;
     document.body.appendChild(s);
   }
