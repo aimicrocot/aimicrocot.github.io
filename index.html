@@ -454,12 +454,6 @@ function showTip(e) {
   }, 1200);
 }
 
-document.addEventListener('mouseover', e => {
-  if (e.target.closest('#loader')) return;
-  if (['A','BUTTON','H1','DIV','SPAN','IMG'].includes(e.target.tagName)) {
-    if (Math.random() > 0.55) showTip(e);
-  }
-});
 document.addEventListener('click', e => {
   if (e.target.closest('#loader')) return;
   showTip(e);
