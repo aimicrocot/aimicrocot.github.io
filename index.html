@@ -201,6 +201,7 @@ header{
 .particle{position:fixed;border-radius:50%;pointer-events:none;z-index:0;animation:fup linear infinite}
 @keyframes fup{0%{transform:translateY(0) scale(0);opacity:0}8%{opacity:1}88%{opacity:.5}100%{transform:translateY(-100vh) scale(1);opacity:0}}
 .spark{position:fixed;pointer-events:none;z-index:0;animation:sparkfly linear infinite}
+@keyframes streakUp{0%{transform:translateY(0);opacity:0}5%{opacity:.9}85%{opacity:.6}100%{transform:translateY(-100vh);opacity:0}}
 @keyframes sparkfly{0%{transform:translate(0,0) rotate(0deg) scale(1);opacity:.9}100%{transform:translate(var(--sx),var(--sy)) rotate(360deg) scale(0);opacity:0}}
 
 .fi{opacity:0;animation:fup2 .6s ease forwards}
