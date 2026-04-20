@@ -14,9 +14,9 @@ body{background:var(--bg);color:#c8e8ff;font-family:'Share Tech Mono',monospace}
 #loader{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:30px 20px;transition:opacity .6s ease}
 #loader.hide{opacity:0;pointer-events:none}
 .boot-title{font-family:'Orbitron',sans-serif;font-size:clamp(1rem,4vw,1.6rem);color:var(--c);text-shadow:var(--gc);letter-spacing:.2em;margin-bottom:28px}
-.boot-bar-wrap{width:min(700px,90vw);height:4px;background:rgba(0,245,255,.12);border:1px solid rgba(0,245,255,.25);margin-bottom:24px;overflow:hidden;align-self:center}
+.boot-bar-wrap{width:min(480px,90vw);height:4px;background:rgba(0,245,255,.12);border:1px solid rgba(0,245,255,.25);margin-bottom:24px;overflow:hidden}
 .boot-bar-fill{height:100%;background:linear-gradient(90deg,var(--v),var(--c));box-shadow:0 0 10px var(--c);width:0%;transition:width .4s cubic-bezier(0.4,0,0.2,1)}
-.log-box{width:min(700px,90vw);height:180px;overflow:hidden;border:1px solid rgba(0,245,255,.15);padding:10px 14px;font-size:.6rem;line-height:1.7;background:rgba(0,10,25,.7);align-self:center}
+.log-box{width:min(480px,90vw);height:180px;overflow:hidden;border:1px solid rgba(0,245,255,.15);padding:10px 14px;font-size:.6rem;line-height:1.7;background:rgba(0,10,25,.7)}
 .log-line{opacity:0;animation:logPop .4s cubic-bezier(0.4,0,0.2,1) forwards}
 @keyframes logPop{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
 .log-ok{color:var(--c)}.log-warn{color:#ffcc00}.log-err{color:var(--p)}.log-sys{color:rgba(200,232,255,.45)}
