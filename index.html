@@ -251,7 +251,7 @@ spawnStreaks();
 
 // искры снизу вверх
 function spawnStreaks() {
-  const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノ';
+  const chars = '01';
   for (let i = 0; i < 80; i++) {
     const s = document.createElement('div');
     s.textContent = chars[Math.floor(Math.random() * chars.length)];
