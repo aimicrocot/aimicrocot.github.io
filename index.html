@@ -236,6 +236,12 @@ header{animation:fup2 .5s ease .05s both}
 <div class="bg-scan"></div>
 <div class="bg-vig"></div>
 
+<div class="bg-streak"></div>
+<div class="bg-streak"></div>
+<div class="bg-streak"></div>
+<div class="bg-streak"></div>
+<div class="bg-streak"></div>
+
 <div id="main">
   <header>
     <div class="sys-bar">[ NEURAL_LINK ACTIVE // IDENTITY LOADED ]</div>
@@ -355,22 +361,6 @@ function spawnParticles() {
   }
 }
 
-function spawnSparks() {
-  const colors = ['#00f5ff','#ff2d78','#b400ff','#ffcc00','#00ff88'];
-  for (let i = 0; i < 40; i++) {
-    const s = document.createElement('div');
-    s.className = 'spark';
-    const size = Math.random() * 2.5 + 0.5;
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    const angle = Math.random() * 360;
-    const dist = 60 + Math.random() * 180;
-    const sx = Math.cos(angle * Math.PI/180) * dist + 'px';
-    const sy = Math.sin(angle * Math.PI/180) * dist + 'px';
-    s.style.cssText = `width:${size}px;height:${size*3}px;border-radius:2px;left:${10+Math.random()*80}%;top:${10+Math.random()*80}%;background:${color};box-shadow:0 0 4px ${color};--sx:${sx};--sy:${sy};animation-duration:${1.5+Math.random()*3}s;animation-delay:${Math.random()*6}s;`;
-    document.body.appendChild(s);
-  }
-}
-
 const logo = document.querySelector('.logo');
 let glitchTimer;
 logo.addEventListener('mouseenter', () => {
@@ -462,6 +452,30 @@ document.addEventListener('click', e => {
     setTimeout(() => s.remove(), 500);
   }
 });
+
+/* Падающие лучи */
+.bg-streak {
+  position: fixed; 
+  z-index: 0; 
+  width: 1px; 
+  opacity: 0.15;
+  animation: streakFall linear infinite;
+  pointer-events: none; /* Чтобы лучи не мешали кликать по кнопкам */
+}
+
+/* Используем твои переменные: --c (cyan), --p (pink), --v (violet) */
+.bg-streak:nth-of-type(1) { left:8%;  height:200px; background:linear-gradient(var(--c),transparent); animation-duration:4s; animation-delay:0s; }
+.bg-streak:nth-of-type(2) { left:23%; height:120px; background:linear-gradient(var(--p),transparent); animation-duration:6s; animation-delay:1.5s; }
+.bg-streak:nth-of-type(3) { left:45%; height:300px; background:linear-gradient(var(--v),transparent); animation-duration:5s; animation-delay:0.7s; }
+.bg-streak:nth-of-type(4) { left:67%; height:160px; background:linear-gradient(var(--c),transparent); animation-duration:7s; animation-delay:2s; }
+.bg-streak:nth-of-type(5) { left:88%; height:250px; background:linear-gradient(var(--p),transparent); animation-duration:4.5s; animation-delay:0.3s; }
+
+@keyframes streakFall {
+  0%   { top: -300px; opacity: 0; }
+  10%  { opacity: 0.2; }
+  90%  { opacity: 0.1; }
+  100% { top: 110vh; opacity: 0; }
+}
 </script>
 </body>
 </html>
