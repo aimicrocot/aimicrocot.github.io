@@ -459,8 +459,9 @@ const avatarImg = document.getElementById('avatar-img');
 const avatarTip = document.getElementById('avatar-tip');
 avatarImg.addEventListener('mouseenter', () => { avatarTip.style.display = 'block'; });
 avatarImg.addEventListener('mouseleave', () => { avatarTip.style.display = 'none'; });
+avatarImg.addEventListener('click', e => { e.stopPropagation(); });
 avatarImg.addEventListener('touchstart', () => {
-  avatarTip.style.display = avatarTip.style.display === 'none' ? 'block' : 'none';
+avatarTip.style.display = avatarTip.style.display === 'none' ? 'block' : 'none';
 }, {passive:true});
 </script>
 </body>
