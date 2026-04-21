@@ -306,7 +306,8 @@ function addLog() {
 
   const wrap = document.createElement('div');
   wrap.className = 'log-line';
-  wrap.style.cssText = 'margin-bottom:8px;';
+  const isRight = logIdx % 2 === 0;
+  wrap.style.cssText = `margin-bottom:8px;display:flex;flex-direction:column;align-items:${isRight ? 'flex-end' : 'flex-start'};`;
 
   const name = document.createElement('div');
   name.style.cssText = `font-size:.55rem;color:${color};opacity:.7;letter-spacing:.12em;margin-bottom:2px;`;
@@ -317,7 +318,7 @@ function addLog() {
     display:inline-block;
     background:rgba(${color === '#00f5ff' ? '0,245,255' : color === '#ff2d78' ? '255,45,120' : color === '#b400ff' ? '180,0,255' : '255,204,0'},.08);
     border:1px solid ${color}33;
-    border-radius:0 8px 8px 8px;
+    border-radius:${isRight ? '8px 0 8px 8px' : '0 8px 8px 8px'};
     padding:5px 10px;
     font-size:.62rem;
     color:rgba(200,232,255,.88);
