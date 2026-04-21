@@ -181,46 +181,93 @@ header{animation:fup2 .5s ease .05s both}
 </div>
 
 <script>
-const LOGS = [
-  {t:'sys', m:'MICROCOT_OS v1.0.0 :: BOOT SEQUENCE INITIATED'},
-  {t:'ok',  m:'[OK] neko_core.dll загружен успешно'},
-  {t:'ok',  m:'[OK] AI_neural_link :: соединение установлено'},
-  {t:'sys', m:'[...] сканирование биохакинг-имплантов...'},
-  {t:'ok',  m:'[OK] кошачьи рефлексы :: откалиброваны'},
-  {t:'warn',m:'[!!] обнаружено 3 суши-пакета в памяти'},
-  {t:'ok',  m:'[OK] discord_api.exe :: авторизация прошла'},
-  {t:'sys', m:'[...] генерация ИИ-матрицы котика...'},
-  {t:'ok',  m:'[OK] cyberpunk_skin.pak :: текстуры загружены'},
-  {t:'warn',m:'[!!] уровень кофеина у мяукрокота: КРИТИЧЕСКИЙ'},
-  {t:'ok',  m:'[OK] токенайзер :: инициализация завершена'},
-  {t:'ok',  m:'[OK] neon_halo.sys :: свечение активировано'},
-  {t:'sys', m:'[...] подключение к серверу SillyTavern...'},
-  {t:'ok',  m:'[OK] prompt_engine :: версия 8.0 готова'},
-  {t:'warn',m:'[!!] кот пытался съесть токены: заблокировано'},
-  {t:'ok',  m:'[OK] sushi_protocol.exe :: инициализирован'},
-  {t:'sys', m:'[...] загрузка когтей для разработки...'},
-  {t:'ok',  m:'[OK] discord_bot :: статус — мурчит онлайн'},
-  {t:'ok',  m:'[OK] biohack_mod v3.7 :: нейроинтерфейс OK'},
-  {t:'ok',  m:'[OK] MICROCOT READY // SECURE CONNECTION: OK'},
+const GOBLIN_POOLS = [
+  [
+    {from:'микрокот_яндере', msg:'эй ВЫ ВООБЩЕ ЗНАЕТЕ что снаружи кто-то зашёл на сайт ??? (っ °Д °;)っ'},
+    {from:'микрокот_дремучий', msg:'ааа всё пропало грузим всё подряд тащи нейросети тащи сушки'},
+    {from:'микрокот_сисадмин', msg:'спокойно ребят я уже запустил neko_core.dll всё под контролем...'},
+    {from:'микрокот_яндере', msg:'ТЫ ЭТО ЕМУ ГОВОРИЛ ??? ОН ЗНАЕТ ПРО НАС ???'},
+    {from:'микрокот_дремучий', msg:'мяу...（；´∀｀）пошли домой я хочу суши'},
+  ],
+  [
+    {from:'микрокот_паникёр', msg:'СИСТЕМА ЗАПУСКАЕТСЯ ААААА ヽ(ﾟДﾟ)ﾉ куда бежать'},
+    {from:'микрокот_сисадмин', msg:'никуда не бежим грузим биохак имплант сиди тихо'},
+    {from:'микрокот_яндере', msg:'а он вообще нас слышит... думаешь слышит... (´,,•ω•,,)'},
+    {from:'микрокот_паникёр', msg:'СЛЫШИТ НЕ СЛЫШИТ ВСЁ РАВНО ПАНИКУЕМ ヽ(°〇°)ﾉ'},
+  ],
+  [
+    {from:'микрокот_дремучий', msg:'проснулся... что происходит... где я... zzZ（*´ω｀*）'},
+    {from:'микрокот_сисадмин', msg:'сайт загружается объект на пороге собирайся'},
+    {from:'микрокот_яндере', msg:'ОБЪЕКТ?? ОН ПРИШЁЛ КО МНЕ?? это судьба я знала (ノ*°▽°*)'},
+    {from:'микрокот_дремучий', msg:'подождите я суши не доел (╥_╥)'},
+    {from:'микрокот_сисадмин', msg:'токены загружены. нейросеть мурчит. можно выходить.'},
+  ],
+  [
+    {from:'микрокот_сисадмин', msg:'стартуем ребят. discord_api онлайн. хвост откалиброван.'},
+    {from:'микрокот_паникёр', msg:'а вдруг он уйдёт пока грузимся ヽ(´□｀。)ﾉ'},
+    {from:'микрокот_яндере', msg:'никуда он не денется я буду ждать вечность если надо'},
+    {from:'микрокот_паникёр', msg:'ВЕЧНОСТЬ ЭТО ДОЛГО Я НЕ ГОТОВ (╯°□°）╯'},
+  ],
+  [
+    {from:'микрокот_дремучий', msg:'кто-то открыл вкладку... чувствую в когтях... （；ω；）'},
+    {from:'микрокот_яндере', msg:'это знак. я запомню этот момент навсегда. каждый пиксель.'},
+    {from:'микрокот_сисадмин', msg:'так биохак-имплант v3.7 подключён. грузим неон.'},
+    {from:'микрокот_дремучий', msg:'хорошо. пойду посплю ещё пять минут пока неон грузится... zzz'},
+    {from:'микрокот_яндере', msg:'НЕ СПАТЬ нас ВИДЯТ ｡°(°.◜ᯅ◝°)°｡'},
+  ],
 ];
 
 const logsEl = document.getElementById('logs');
 const bar    = document.getElementById('bar');
 const loader = document.getElementById('loader');
 const main   = document.getElementById('main');
+
+const COLORS = {
+  'микрокот_яндере':   '#ff2d78',
+  'микрокот_сисадмин': '#00f5ff',
+  'микрокот_дремучий': '#b400ff',
+  'микрокот_паникёр':  '#ffcc00',
+};
+
+const pool = GOBLIN_POOLS[Math.floor(Math.random() * GOBLIN_POOLS.length)];
 let logIdx = 0;
 
 function addLog() {
-  if (logIdx >= LOGS.length) { setTimeout(showMain, 400); return; }
-  const l = LOGS[logIdx++];
-  const el = document.createElement('div');
-  el.className = 'log-line log-' + l.t;
-  el.textContent = '> ' + l.m;
-  logsEl.appendChild(el);
+  if (logIdx >= pool.length) { setTimeout(showMain, 400); return; }
+  const l = pool[logIdx++];
+  const color = COLORS[l.from] || '#00f5ff';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'log-line';
+  wrap.style.cssText = 'margin-bottom:8px;';
+
+  const name = document.createElement('div');
+  name.style.cssText = `font-size:.55rem;color:${color};opacity:.7;letter-spacing:.12em;margin-bottom:2px;`;
+  name.textContent = l.from + ':';
+
+  const bubble = document.createElement('div');
+  bubble.style.cssText = `
+    display:inline-block;
+    background:rgba(${color === '#00f5ff' ? '0,245,255' : color === '#ff2d78' ? '255,45,120' : color === '#b400ff' ? '180,0,255' : '255,204,0'},.08);
+    border:1px solid ${color}33;
+    border-radius:0 8px 8px 8px;
+    padding:5px 10px;
+    font-size:.62rem;
+    color:rgba(200,232,255,.88);
+    line-height:1.5;
+    max-width:95%;
+  `;
+  bubble.textContent = l.msg;
+
+  wrap.appendChild(name);
+  wrap.appendChild(bubble);
+  logsEl.appendChild(wrap);
   logsEl.scrollTop = logsEl.scrollHeight;
-  bar.style.width = (logIdx / LOGS.length * 100) + '%';
-  setTimeout(addLog, 180 + Math.random() * 180);
+  bar.style.width = (logIdx / pool.length * 100) + '%';
+  setTimeout(addLog, 900 + Math.random() * 400);
 }
+
+setTimeout(addLog, 300);
 
 function showMain() {
   loader.classList.add('hide');
