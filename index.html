@@ -106,20 +106,19 @@ header{animation:fup2 .5s ease .05s both}
 .status{animation:fup2 .4s ease .5s both}
 
 @media(max-width:600px){
-  .nav{max-width:340px}
-  .nav-card{width:100%;padding:14px 18px}
-  .card-title{font-size:.82rem}
-  .card-sub{font-size:.62rem}
+  .nav{max-width:100%;padding:0 12px}
+  .nav-row1{flex-wrap:wrap;gap:8px}
+  .nav-row2{flex-wrap:wrap;gap:8px}
+  .nav-card{width:calc(50% - 4px);padding:12px 8px}
+  .card-title{font-size:.72rem}
+  .card-sub{font-size:.56rem}
   .top-strip{flex-direction:column;gap:4px;align-items:stretch;padding:10px 16px}
   .strip-dot{display:none}
   .strip-item{display:flex;justify-content:space-between;width:100%;font-size:.65rem}
   .strip-item span{text-align:right}
   header{padding:18px 0 0}
 }
-</style>
-</head>
-<body>
-
+  
 <div id="loader">
   <div class="boot-title">MICROCOT_OS :: INIT</div>
   <div class="boot-bar-wrap"><div class="boot-bar-fill" id="bar"></div></div>
