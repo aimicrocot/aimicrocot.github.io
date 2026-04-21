@@ -143,7 +143,8 @@ header{animation:fup2 .5s ease .05s both}
       <div class="corner bl"></div>
       <div class="corner br"></div>
       <div class="avatar-scan"></div>
-      <img src="https://aimicrocot.github.io/char.jpg" alt="Microcot" class="avatar-img">
+      <img src="https://aimicrocot.github.io/char.jpg" alt="Microcot" class="avatar-img" id="avatar-img">
+      <div id="avatar-tip" style="display:none;position:absolute;bottom:-38px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:'Share Tech Mono',monospace;font-size:.6rem;color:#ffcc00;text-shadow:0 0 8px #ffcc00;background:rgba(0,10,25,.88);border:1px solid #ffcc0044;padding:5px 12px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));z-index:10;pointer-events:none;animation:tipIn .15s ease forwards;">> псс... потыкай меня везде палочкой</div>
     </div>
   </div>
 
@@ -454,6 +455,13 @@ document.addEventListener('click', e => {
     setTimeout(() => s.remove(), 500);
   }
 });
+const avatarImg = document.getElementById('avatar-img');
+const avatarTip = document.getElementById('avatar-tip');
+avatarImg.addEventListener('mouseenter', () => { avatarTip.style.display = 'block'; });
+avatarImg.addEventListener('mouseleave', () => { avatarTip.style.display = 'none'; });
+avatarImg.addEventListener('touchstart', () => {
+  avatarTip.style.display = avatarTip.style.display === 'none' ? 'block' : 'none';
+}, {passive:true});
 </script>
 </body>
 </html>
