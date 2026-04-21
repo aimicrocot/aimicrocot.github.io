@@ -70,8 +70,8 @@ header{position:relative;z-index:2;width:100%;max-width:860px;padding:22px 0 0;t
 
 .div{position:relative;z-index:2;width:100%;max-width:680px;height:1px;margin:20px 0 16px;opacity:0}
 
-.nav{position:relative;z-index:2;width:100%;max-width:680px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
-.nav-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;width:200px;padding:14px 10px 12px;background:rgba(0,12,30,.78);border:1px solid rgba(0,245,255,.18);text-decoration:none;overflow:hidden;cursor:pointer;transition:border-color .25s,transform .25s,box-shadow .25s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));backdrop-filter:blur(8px);flex-shrink:0}
+.nav{position:relative;z-index:2;display:flex;flex-direction:column;align-items:stretch;gap:7px;width:260px;padding-bottom:80px}
+.nav-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;width:150px;padding:8px 12px;background:rgba(0,12,30,.78);border:1px solid rgba(0,245,255,.18);text-decoration:none;overflow:hidden;cursor:pointer;transition:border-color .25s,transform .25s,box-shadow .25s;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));backdrop-filter:blur(8px);flex-shrink:0}
 .nav-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,245,255,.07) 0%,transparent 60%);opacity:0;transition:opacity .25s}
 .nav-card::after{content:'';position:absolute;bottom:0;left:-100%;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--c),transparent);transition:left .35s ease}
 .nav-card:hover{border-color:var(--c);transform:translateY(-5px);box-shadow:0 0 18px rgba(0,245,255,.25),0 0 4px rgba(0,245,255,.5),inset 0 0 16px rgba(0,245,255,.06)}
@@ -114,6 +114,10 @@ header{animation:fup2 .5s ease .05s both}
   .strip-item span{text-align:right}
   header{padding:18px 0 0}
 }
+  .nav-row{display:flex}.nav-row.left{justify-content:flex-start}.nav-row.right{justify-content:flex-end}.nav-row.center{justify-content:center}
+  .nav-card.hidden-card{opacity:0;pointer-events:none}.nav-card.hidden-card.anim-left{transform:translateX(-50px)}.nav-card.hidden-card.anim-right{transform:translateX(50px)}
+  .nav-card.reveal{opacity:1;pointer-events:auto;transform:translateX(0);transition:opacity .5s ease,transform .5s ease,border-color .25s,box-shadow .25s}
+  .nav-sep{width:120px;height:1px;background:linear-gradient(90deg,transparent,rgba(0,245,255,.15),transparent);margin:4px auto}
 </style>
 </head>
 <body>
@@ -151,41 +155,49 @@ header{animation:fup2 .5s ease .05s both}
   <div class="div" style="opacity:100;"></div>
 
   <div class="nav">
-    <a href="https://github.com/aimicrocot/microcot-preset" class="nav-card fi">
-      <div class="card-ico">⚙️</div>
-      <div class="card-title">МОЙ ПРЕСЕТ</div>
-      <div class="card-sub">[ промты и регексы ]</div>
-    </a>
-    <a href="https://github.com/aimicrocot/promting-rp-guide-sillytavern" class="nav-card fi">
-      <div class="card-ico">📡</div>
-      <div class="card-title">ПРОМТИНГ</div>
-      <div class="card-sub">[ гайд ]</div>
-    </a>
-    <a href="https://github.com/aimicrocot/Tokens-Count" class="nav-card fi">
-      <div class="card-ico">🔢</div>
-      <div class="card-title">ТОКЕНАЙЗЕР</div>
-      <div class="card-sub">[ расширение ]</div>
-    </a>
-    <a href="https://github.com/aimicrocot/Scenarios-Extension" class="nav-card fi">
-      <div class="card-ico">🎬</div>
-      <div class="card-title">СЦЕНАРИИ</div>
-      <div class="card-sub">[ расширение ]</div>
-    </a>
-    <a href="https://github.com/aimicrocot/Facts-Memory-Tracker" class="nav-card wip fi">
-      <div class="card-ico">🧠</div>
-      <div class="card-title">САММАРИ</div>
-      <div class="card-sub">[ в работе ]</div>
-    </a>
-    <a href="https://t.me/sillytavern1" class="nav-card fi" target="_blank">
-      <div class="card-ico">✈️</div>
-      <div class="card-title">ТЕЛЕГРАМ</div>
-      <div class="card-sub">[ канал ]</div>
-    </a>
-    <a href="https://boosty.to/microcot/donate" class="nav-card fi" target="_blank">
-      <div class="card-ico">💜</div>
-      <div class="card-title">ПОДДЕРЖАТЬ</div>
-      <div class="card-sub">[ бусти ]</div>
-    </a>
+    <div class="nav-row left">
+      <a href="https://t.me/sillytavern1" class="nav-card fi anim-left" target="_blank">
+        <div class="card-title">ТЕЛЕГРАМ</div>
+        <div class="card-sub">[ канал ]</div>
+      </a>
+    </div>
+    <div class="nav-row right">
+      <a href="https://boosty.to/microcot/donate" class="nav-card fi anim-right" target="_blank">
+        <div class="card-title">ПОДДЕРЖАТЬ</div>
+        <div class="card-sub">[ бусти ]</div>
+      </a>
+    </div>
+    <div class="nav-sep"></div>
+    <div class="nav-row left">
+      <a href="https://github.com/aimicrocot/microcot-preset" class="nav-card fi hidden-card anim-left" target="_blank">
+        <div class="card-title">МОЙ ПРЕСЕТ</div>
+        <div class="card-sub">[ промты и регексы ]</div>
+      </a>
+    </div>
+    <div class="nav-row right">
+      <a href="https://github.com/aimicrocot/promting-rp-guide-sillytavern" class="nav-card fi hidden-card anim-right" target="_blank">
+        <div class="card-title">ПРОМТИНГ</div>
+        <div class="card-sub">[ гайд ]</div>
+      </a>
+    </div>
+    <div class="nav-row left">
+      <a href="https://github.com/aimicrocot/Tokens-Count" class="nav-card fi hidden-card anim-left" target="_blank">
+        <div class="card-title">ТОКЕНАЙЗЕР</div>
+        <div class="card-sub">[ расширение ]</div>
+      </a>
+    </div>
+    <div class="nav-row right">
+      <a href="https://github.com/aimicrocot/Scenarios-Extension" class="nav-card fi hidden-card anim-right" target="_blank">
+        <div class="card-title">СЦЕНАРИИ</div>
+        <div class="card-sub">[ расширение ]</div>
+      </a>
+    </div>
+    <div class="nav-row center">
+      <a href="https://github.com/aimicrocot/Facts-Memory-Tracker" class="nav-card wip fi hidden-card anim-left" target="_blank">
+        <div class="card-title">САММАРИ</div>
+        <div class="card-sub">[ в работе ]</div>
+      </a>
+    </div>
   </div>
 
   <div class="status">[ SYS.VER 1.0.0_ST // SECURE CONNECTION ESTABLISHED ]</div>
@@ -352,6 +364,16 @@ function showMain() {
     loader.style.display = 'none';
     main.classList.add('show');
     spawnStreaks();
+    const hiddenCards = document.querySelectorAll('.nav-card.hidden-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('reveal'), i * 150);
+          observer.unobserve(entry.target);
+        }
+      });
+}, { threshold: 0.2 });
+hiddenCards.forEach(card => observer.observe(card));
   }, 650);
 }
 
