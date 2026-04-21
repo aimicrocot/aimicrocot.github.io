@@ -267,8 +267,6 @@ function addLog() {
   setTimeout(addLog, 1400 + Math.random() * 600);
 }
 
-setTimeout(addLog, 300);
-
 function showMain() {
   loader.classList.add('hide');
   setTimeout(() => {
@@ -279,7 +277,6 @@ function showMain() {
 }
 
 setTimeout(addLog, 300);
-spawnStreaks();
 
 // искры снизу вверх
 function spawnStreaks() {
