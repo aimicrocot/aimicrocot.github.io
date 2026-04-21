@@ -107,9 +107,11 @@ header{animation:fup2 .5s ease .05s both}
 
 @media(max-width:600px){
   .nav{max-width:100%;padding:0 12px}
-  .nav-row1{flex-wrap:wrap;gap:8px}
-  .nav-row2{flex-wrap:wrap;gap:8px}
-  .nav-card{width:calc(50% - 4px);padding:12px 8px}
+  .nav-row1{flex-wrap:wrap;gap:8px;width:100%}
+  .nav-row2{flex-wrap:wrap;gap:8px;width:100%;justify-content:center}
+  .nav-card{width:calc(50% - 4px);min-width:0;padding:12px 8px;flex-shrink:1}
+  .card-title{font-size:.65rem;letter-spacing:.04em}
+  .card-sub{font-size:.52rem}
   .card-title{font-size:.72rem}
   .card-sub{font-size:.56rem}
   .top-strip{flex-direction:column;gap:4px;align-items:stretch;padding:10px 16px}
