@@ -175,6 +175,12 @@ header{animation:fup2 .5s ease .05s both}
   .player-disc{width:56px;height:56px}
   .player-title{font-size:.72rem}
 }
+.player-divider{position:relative;z-index:2;width:100%;max-width:680px;margin:22px 0 0;height:28px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.player-divider::before,.player-divider::after{content:'';position:absolute;top:50%;height:1px;width:calc(50% - 120px)}
+.player-divider::before{left:0;background:linear-gradient(90deg,transparent,rgba(0,245,255,.5))}
+.player-divider::after{right:0;background:linear-gradient(270deg,transparent,rgba(0,245,255,.5))}
+.pdiv-inner{border:1px solid rgba(0,245,255,.2);padding:4px 14px;clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px),0 8px);background:rgba(0,10,25,.6)}
+.pdiv-code{font-size:.5rem;color:rgba(0,245,255,.5);letter-spacing:.2em}
 </style>
 </head>
 <body>
