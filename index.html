@@ -54,6 +54,22 @@ header{position:relative;z-index:2;width:100%;max-width:860px;padding:22px 0 0;t
 .avatar-ring{position:absolute;inset:-3px;border-radius:2px;z-index:3;pointer-events:none;box-shadow:0 0 12px var(--c),0 0 28px rgba(0,245,255,.4),inset 0 0 12px rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.55);clip-path:polygon(10px 0%,calc(100% - 10px) 0%,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0% calc(100% - 10px),0% 10px);animation:rpulse 3s ease-in-out infinite}
 @keyframes rpulse{0%,100%{box-shadow:0 0 12px var(--c),0 0 28px rgba(0,245,255,.4)}50%{box-shadow:0 0 20px var(--c),0 0 50px rgba(0,245,255,.6),0 0 80px rgba(0,245,255,.2)}}
 @keyframes aglow{0%,100%{opacity:.8;transform:scale(1)}50%{opacity:.45;transform:scale(1.06)}}
+.v4-r{position:absolute;inset:-2px;z-index:3;pointer-events:none;border:1px solid rgba(255,45,120,.5);animation:v4glitch1 5s step-end infinite}
+.v4-g{position:absolute;inset:-2px;z-index:3;pointer-events:none;border:1px solid rgba(0,245,255,.5);animation:v4glitch2 5s step-end infinite}
+.v4-b{position:absolute;inset:-2px;z-index:3;pointer-events:none;border:1px solid rgba(180,0,255,.5);animation:v4glitch3 5s step-end infinite}
+@keyframes v4glitch1{0%,89%,100%{transform:translate(0)}90%{transform:translate(-3px,1px)}92%{transform:translate(3px,-1px)}94%{transform:translate(0)}}
+@keyframes v4glitch2{0%,91%,100%{transform:translate(0)}92%{transform:translate(2px,2px)}94%{transform:translate(-2px,0)}96%{transform:translate(0)}}
+@keyframes v4glitch3{0%,93%,100%{transform:translate(0)}94%{transform:translate(1px,-3px)}96%{transform:translate(-1px,2px)}98%{transform:translate(0)}}
+.v4-main{position:absolute;inset:-3px;z-index:4;pointer-events:none;border:1px solid rgba(0,245,255,.55);box-shadow:0 0 15px rgba(0,245,255,.4),0 0 35px rgba(0,245,255,.15),inset 0 0 15px rgba(0,245,255,.06);animation:v4main 3s ease-in-out infinite}
+@keyframes v4main{0%,100%{box-shadow:0 0 15px rgba(0,245,255,.4),0 0 35px rgba(0,245,255,.15)}50%{box-shadow:0 0 25px rgba(0,245,255,.65),0 0 55px rgba(0,245,255,.25),0 0 80px rgba(0,245,255,.1)}}
+.v4-stripe{position:absolute;left:0;right:0;height:3px;z-index:5;background:rgba(0,245,255,.12);pointer-events:none;animation:v4stripe 4s step-end infinite}
+@keyframes v4stripe{0%,100%{top:30%;opacity:0}85%{opacity:0}86%{top:30%;opacity:1}87%{top:55%;opacity:.8}88%{top:20%;opacity:.6}89%{opacity:0}}
+.v4-glow{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);width:170px;height:20px;background:radial-gradient(ellipse,rgba(0,245,255,.4) 0%,transparent 70%);filter:blur(5px);z-index:1}
+.v3-acc{position:absolute;width:14px;height:14px;z-index:6;background:var(--c);box-shadow:0 0 8px var(--c),0 0 16px rgba(0,245,255,.5)}
+.v3-acc.tl{top:-1px;left:-1px;clip-path:polygon(0 0,100% 0,0 100%)}
+.v3-acc.tr{top:-1px;right:-1px;clip-path:polygon(0 0,100% 0,100% 100%)}
+.v3-acc.bl{bottom:-1px;left:-1px;clip-path:polygon(0 0,0 100%,100% 100%)}
+.v3-acc.br{bottom:-1px;right:-1px;clip-path:polygon(100% 0,100% 100%,0 100%)}
 .avatar-img{width:100%;display:block;position:relative;z-index:2;filter:saturate(1.25) contrast(1.1);clip-path:polygon(10px 0%,calc(100% - 10px) 0%,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0% calc(100% - 10px),0% 10px)}
 .avatar-scan{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--c),transparent);z-index:4;animation:scnl 2.5s linear infinite;box-shadow:0 0 10px var(--c)}
 @keyframes scnl{0%{top:0%;opacity:1}85%{opacity:.8}100%{top:100%;opacity:0}}
