@@ -128,24 +128,24 @@ header{animation:fup2 .5s ease .05s both}
 .player-inner{display:flex;align-items:center;gap:18px;background:rgba(0,12,30,.82);border:1px solid rgba(0,245,255,.2);padding:16px 20px;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));backdrop-filter:blur(10px)}
 
 /* диск */
-.player-disc-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0}
-.player-disc{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 50%,#0a0a1a 0%,#0d1b2a 40%,#0a0a1a 100%);border:2px solid rgba(0,245,255,.35);box-shadow:0 0 14px rgba(0,245,255,.25),inset 0 0 12px rgba(0,0,0,.6);position:relative;display:flex;align-items:center;justify-content:center;transition:transform 0s linear}
-.player-disc.spinning{animation:discSpin 3s linear infinite}
-@keyframes discSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.player-disc-ring{position:absolute;inset:8px;border-radius:50%;border:1px solid rgba(0,245,255,.2);box-shadow:0 0 6px rgba(0,245,255,.15)}
-.player-disc-center{width:14px;height:14px;border-radius:50%;background:#ff2d78;box-shadow:0 0 10px #ff2d78,0 0 20px rgba(255,45,120,.4)}
-
-/* eq bars */
-.player-eq{display:flex;align-items:flex-end;gap:2px;height:18px}
-.player-eq span{width:4px;background:var(--c);border-radius:1px;box-shadow:0 0 4px var(--c);height:4px;transition:height .1s}
-.player-eq.active span:nth-child(1){animation:eq1 .5s ease-in-out infinite}
-.player-eq.active span:nth-child(2){animation:eq1 .4s ease-in-out .1s infinite}
-.player-eq.active span:nth-child(3){animation:eq1 .6s ease-in-out .05s infinite}
-.player-eq.active span:nth-child(4){animation:eq1 .45s ease-in-out .15s infinite}
-.player-eq.active span:nth-child(5){animation:eq1 .55s ease-in-out .08s infinite}
-.player-eq.active span:nth-child(6){animation:eq1 .4s ease-in-out .2s infinite}
-.player-eq.active span:nth-child(7){animation:eq1 .5s ease-in-out .03s infinite}
-.player-eq.active span:nth-child(8){animation:eq1 .6s ease-in-out .12s infinite}
+.player-disc-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.player-spectrum{width:72px;height:72px;display:flex;align-items:flex-end;justify-content:center;gap:3px;padding-bottom:6px;background:rgba(0,10,25,.5);border:1px solid rgba(0,245,255,.2);clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px),0 8px)}
+.player-spectrum span{width:5px;border-radius:2px 2px 0 0;background:var(--c);box-shadow:0 0 6px var(--c);height:8px;transition:height .1s}
+.player-spectrum span:nth-child(1){height:20px}
+.player-spectrum span:nth-child(2){height:40px}
+.player-spectrum span:nth-child(3){height:55px}
+.player-spectrum span:nth-child(4){height:35px;background:var(--p);box-shadow:0 0 6px var(--p)}
+.player-spectrum span:nth-child(5){height:50px}
+.player-spectrum span:nth-child(6){height:28px}
+.player-spectrum span:nth-child(7){height:42px;background:var(--v);box-shadow:0 0 6px var(--v)}
+.player-spectrum.active span:nth-child(1){animation:specbar .6s ease-in-out infinite}
+.player-spectrum.active span:nth-child(2){animation:specbar .5s ease-in-out .1s infinite}
+.player-spectrum.active span:nth-child(3){animation:specbar .7s ease-in-out .05s infinite}
+.player-spectrum.active span:nth-child(4){animation:specbar .45s ease-in-out .15s infinite}
+.player-spectrum.active span:nth-child(5){animation:specbar .6s ease-in-out .08s infinite}
+.player-spectrum.active span:nth-child(6){animation:specbar .5s ease-in-out .2s infinite}
+.player-spectrum.active span:nth-child(7){animation:specbar .65s ease-in-out .03s infinite}
+@keyframes specbar{0%,100%{transform:scaleY(0.3)}50%{transform:scaleY(1)}}
 @keyframes eq1{0%,100%{height:3px}50%{height:16px}}
 
 /* info */
@@ -269,11 +269,7 @@ header{animation:fup2 .5s ease .05s both}
   <div class="player-wrap fi" style="animation-delay:.55s">
     <div class="player-label">не рофли, нейро</div>
     <div class="player-inner">
-      <div class="player-disc-wrap">
-        <div class="player-disc" id="disc">
-          <div class="player-disc-ring"></div>
-          <div class="player-disc-center"></div>
-        </div>
+      
         <div class="player-eq" id="eq">
           <span></span><span></span><span></span><span></span>
           <span></span><span></span><span></span><span></span>
@@ -656,8 +652,7 @@ audio.addEventListener('timeupdate',()=>{
 audio.addEventListener('ended',()=>{
   btnPlay.innerHTML='&#9654;';
   btnPlay.classList.remove('playing');
-  disc.classList.remove('spinning');
-  eq.classList.remove('active');
+  disc.classList.remove('active');
 });
 
 function togglePlay(){
@@ -665,14 +660,12 @@ function togglePlay(){
     audio.play();
     btnPlay.innerHTML='&#9646;&#9646;';
     btnPlay.classList.add('playing');
-    disc.classList.add('spinning');
-    eq.classList.add('active');
+    disc.classList.add('active');
   } else {
     audio.pause();
     btnPlay.innerHTML='&#9654;';
     btnPlay.classList.remove('playing');
-    disc.classList.remove('spinning');
-    eq.classList.remove('active');
+    disc.classList.remove('active');
   }
 }
 
