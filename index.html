@@ -57,7 +57,13 @@ header{position:relative;z-index:2;width:100%;max-width:860px;padding:22px 0 0;t
   clip-path: polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
   box-shadow: 0 0 18px rgba(0,245,255,.25), 0 0 4px rgba(0,245,255,.5), inset 0 0 16px rgba(0,245,255,.06);
   backdrop-filter: blur(8px);
-  overflow: hidden;
+  overflow: visible;
+  transition: border-color .25s, box-shadow .25s;
+  cursor: pointer;
+}
+.avatar-wrap:hover {
+  border-color: var(--c);
+  box-shadow: 0 0 18px rgba(0,245,255,.35), 0 0 6px rgba(0,245,255,.7), inset 0 0 20px rgba(0,245,255,.1);
 }
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 .v3-acc.tl{top:-1px;left:-1px;clip-path:polygon(0 0,100% 0,0 100%)}
@@ -320,7 +326,7 @@ header{animation:fup2 .5s ease .05s both}
     <div class="avatar-wrap">
       <div class="avatar-scan"></div>
       <img src="https://aimicrocot.github.io/char.jpg" alt="Microcot" class="avatar-img" id="avatar-img">
-      <div id="avatar-tip" style="display:none;position:absolute;top:50%;right:-170px;transform:translateY(-50%);white-space:nowrap;font-family:'Share Tech Mono',monospace;font-size:.6rem;color:#ff2d78;text-shadow:0 0 8px #ff2d78;background:rgba(0,10,25,.88);border:1px solid #ff2d78;padding:5px 12px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));z-index:10;pointer-events:none;animation:tipIn .15s ease forwards;">> псс потыкай палочкой</div>
+      <div id="avatar-tip" style="display:none;position:absolute;bottom:-32px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:'Share Tech Mono',monospace;font-size:.6rem;color:#ff2d78;text-shadow:0 0 8px #ff2d78;background:rgba(0,10,25,.88);border:1px solid #ff2d78;padding:5px 12px;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));z-index:10;pointer-events:none;animation:tipIn .15s ease forwards;">> псс потыкай палочкой</div>
     </div>
   </div>
 
