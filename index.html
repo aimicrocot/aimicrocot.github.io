@@ -190,6 +190,86 @@ header{animation:fup2 .5s ease .05s both}
 .player-divider::after{right:0;background:linear-gradient(270deg,transparent,rgba(0,245,255,.5))}
 .pdiv-inner{border:1px solid rgba(0,245,255,.2);padding:4px 14px;clip-path:polygon(8px 0,calc(100% - 8px) 0,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0 calc(100% - 8px),0 8px);background:rgba(0,10,25,.6)}
 .pdiv-code{font-size:.5rem;color:rgba(0,245,255,.5);letter-spacing:.2em}
+.side-vert {
+  position: fixed;
+  top: 0; bottom: 0;
+  width: 160px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.side-vert.left { left: 0; }
+.side-vert.right { right: 0; }
+.side-vert .sv-line {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+}
+.side-vert.left .sv-line {
+  right: 0;
+  background: linear-gradient(180deg, transparent, rgba(0,245,255,.2) 30%, rgba(0,245,255,.2) 70%, transparent);
+}
+.side-vert.right .sv-line {
+  left: 0;
+  background: linear-gradient(180deg, transparent, rgba(255,45,120,.15) 30%, rgba(255,45,120,.15) 70%, transparent);
+}
+.sv-word {
+  font-family: 'Orbitron', sans-serif;
+  writing-mode: vertical-rl;
+  font-size: 4.5rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  color: rgba(0,245,255,.04);
+  user-select: none;
+  line-height: 1;
+}
+.side-vert.right .sv-word {
+  color: rgba(255,45,120,.035);
+  transform: rotate(180deg);
+}
+.sv-small {
+  font-size: .42rem;
+  color: rgba(0,245,255,.18);
+  letter-spacing: .25em;
+  writing-mode: vertical-rl;
+  margin-top: 14px;
+}
+.side-vert.right .sv-small {
+  color: rgba(255,45,120,.15);
+  transform: rotate(180deg);
+}
+.sv-ticker {
+  position: absolute;
+  bottom: 24px;
+  font-size: .4rem;
+  color: rgba(0,245,255,.15);
+  letter-spacing: .18em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.side-vert.right .sv-ticker {
+  writing-mode: vertical-lr;
+  color: rgba(255,45,120,.12);
+  transform: none;
+}
+.sv-top {
+  position: absolute;
+  top: 24px;
+  font-size: .4rem;
+  color: rgba(0,245,255,.15);
+  letter-spacing: .2em;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.side-vert.right .sv-top {
+  color: rgba(255,45,120,.12);
+  writing-mode: vertical-lr;
+  transform: none;
+}
+@media(max-width:1100px) { .side-vert { display: none; } }
 </style>
 </head>
 <body>
@@ -205,6 +285,20 @@ header{animation:fup2 .5s ease .05s both}
 <div class="bg-vig"></div>
 
 <div id="main">
+  <div class="side-vert left">
+  <div class="sv-line"></div>
+  <div class="sv-word">MICRO</div>
+  <div class="sv-small">NEKO_OS_V3</div>
+  <div class="sv-ticker">01001101 · 01000001 · 01010101</div>
+  <div class="sv-top">// NEURAL_LINK //</div>
+</div>
+<div class="side-vert right">
+  <div class="sv-line"></div>
+  <div class="sv-word">COT</div>
+  <div class="sv-small">BIOHACK_V3.7</div>
+  <div class="sv-ticker">мяу · мяу · мяу</div>
+  <div class="sv-top">// ONLINE //</div>
+</div>
   <header>
     <div class="sys-bar">[ NEURAL_LINK ACTIVE // IDENTITY LOADED ]</div>
     <h1 class="logo">MICROCOT</h1>
