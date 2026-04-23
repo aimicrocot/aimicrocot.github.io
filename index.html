@@ -52,14 +52,26 @@ header{position:relative;z-index:2;width:100%;max-width:860px;padding:22px 0 0;t
   position: relative;
   width: clamp(160px,38vw,260px);
   animation: bounce 3s ease-in-out infinite;
-  background: rgba(0,12,30,.78);
+  background: transparent;
+  border: none;
+  backdrop-filter: blur(8px);
+  overflow: visible;
+  cursor: pointer;
+}
+.avatar-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   border: 1px solid rgba(0,245,255,.18);
   clip-path: polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
   box-shadow: 0 0 18px rgba(0,245,255,.25), 0 0 4px rgba(0,245,255,.5), inset 0 0 16px rgba(0,245,255,.06);
-  backdrop-filter: blur(8px);
-  overflow: visible;
+  pointer-events: none;
+  z-index: 6;
   transition: border-color .25s, box-shadow .25s;
-  cursor: pointer;
+}
+.avatar-wrap:hover::before {
+  border-color: var(--c);
+  box-shadow: 0 0 24px rgba(0,245,255,.4), 0 0 8px rgba(0,245,255,.7), inset 0 0 20px rgba(0,245,255,.12);
 }
 .avatar-wrap:hover {
   border-color: var(--c);
