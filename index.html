@@ -1049,23 +1049,19 @@ function onKey(e) {
     return;
   }
 
- if (e.key.length !== 1) return;
+if (hasError) return;
+  if (e.key.length !== 1) return;
   e.preventDefault();
 
   const expected = currentCmd[typedPos];
   if (e.key === expected) {
     typedPos++;
-    hasError = false;
-    typedEl.textContent = currentCmd.slice(0, typedPos);
-    colorTarget();
-    hintEl.textContent = '// вводи команду //';
-    hintEl.className = '';
-    hintEl.style.color = '';
+    renderTarget();
     if (typedPos === currentCmd.length) cmdComplete();
   } else {
     hasError = true;
-    hintEl.textContent = `// ошибка: ожидается "${expected}" //`;
-    hintEl.className = 'err';
+    hintEl.textContent = `// ошибка: ожидается "${expected}" — backspace чтобы исправить //`;
+    hintEl.className   = 'err';
     setTimeout(() => { if(running) hintEl.className = ''; }, 400);
   }
 
