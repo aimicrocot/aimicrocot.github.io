@@ -1049,21 +1049,25 @@ function onKey(e) {
     return;
   }
 
-if (hasError) return;
+  if (hasError) return;
   if (e.key.length !== 1) return;
   e.preventDefault();
 
   const expected = currentCmd[typedPos];
   if (e.key === expected) {
     typedPos++;
-    renderTarget();
-    if (typedPos === currentCmd.length) cmdComplete();
+    typedEl.textContent = currentCmd.slice(0, typedPos);
+    colorTarget();
+    if (typedPos === currentCmd.length) {
+      cmdComplete();
+    }
   } else {
     hasError = true;
     hintEl.textContent = `// ошибка: ожидается "${expected}" — backspace чтобы исправить //`;
-    hintEl.className   = 'err';
-    setTimeout(() => { if(running) hintEl.className = ''; }, 400);
+    hintEl.className = 'err';
+    setTimeout(() => { hintEl.className = running ? '' : ''; }, 300);
   }
+}
 
 function colorTarget() {
   const done = currentCmd.slice(0, typedPos);
