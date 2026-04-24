@@ -723,6 +723,7 @@ function showTip(e) {
 
 document.addEventListener('click', e => {
   if (e.target.closest('#loader')) return;
+  if (e.target.closest('#cybergame')) return;
   showTip(e);
   const colors = ['#00f5ff','#ff2d78','#b400ff','#ffcc00'];
   for (let i = 0; i < 6; i++) {
