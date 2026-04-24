@@ -1036,20 +1036,7 @@ function onKey(e) {
   if (!running) return;
   if (e.key === 'Escape') { stopGame(); return; }
 
-  if (e.key === 'Backspace') {
-    if (typedPos > 0) {
-      typedPos--;
-      typedEl.textContent = currentCmd.slice(0, typedPos);
-      hasError = false;
-      hintEl.textContent = '// вводи команду //';
-      hintEl.className = '';
-      colorTarget();
-    }
-    e.preventDefault();
-    return;
-  }
-
-  if (hasError) return;
+  // Клавиши управления и Backspace игнорируются
   if (e.key.length !== 1) return;
   e.preventDefault();
 
@@ -1058,14 +1045,19 @@ function onKey(e) {
     typedPos++;
     typedEl.textContent = currentCmd.slice(0, typedPos);
     colorTarget();
+    
+    // Сброс текста ошибки при верном нажатии
+    hintEl.textContent = '// вводи команду //';
+    hintEl.className = '';
+
     if (typedPos === currentCmd.length) {
       cmdComplete();
     }
   } else {
-    hasError = true;
+    // Подсказка об ошибке без блокировки ввода
     hintEl.textContent = `// ошибка: ожидается "${expected}" //`;
     hintEl.className = 'err';
-    setTimeout(() => { hintEl.className = running ? '' : ''; }, 300);
+    setTimeout(() => { if(running) hintEl.className = ''; }, 300);
   }
 }
 
