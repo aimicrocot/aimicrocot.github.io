@@ -1049,25 +1049,24 @@ function onKey(e) {
     return;
   }
 
-  if (hasError) return;
-  if (e.key.length !== 1) return;
+ if (e.key.length !== 1) return;
   e.preventDefault();
 
   const expected = currentCmd[typedPos];
   if (e.key === expected) {
     typedPos++;
-    typedEl.textContent = currentCmd.slice(0, typedPos);
-    colorTarget();
-    if (typedPos === currentCmd.length) {
-      cmdComplete();
-    }
+    hasError = false;
+    renderTarget();
+    hintEl.textContent = '// вводи команду //';
+    hintEl.className   = '';
+    hintEl.style.color = '';
+    if (typedPos === currentCmd.length) cmdComplete();
   } else {
     hasError = true;
-    hintEl.textContent = `// ошибка: ожидается "${expected}" — backspace чтобы исправить //`;
-    hintEl.className = 'err';
-    setTimeout(() => { hintEl.className = running ? '' : ''; }, 300);
+    hintEl.textContent = `// ошибка: ожидается "${expected}" //`;
+    hintEl.className   = 'err';
+    setTimeout(() => { if(running) hintEl.className = ''; }, 400);
   }
-}
 
 function colorTarget() {
   const done = currentCmd.slice(0, typedPos);
