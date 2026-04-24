@@ -809,6 +809,313 @@ document.addEventListener('mousemove', e=>{ if(dragging) seekTo(e); });
 document.addEventListener('mouseup',  ()=>{ dragging=false; });
 progBg.addEventListener('touchstart', e=>{ seekTo(e); },{passive:true});
 progBg.addEventListener('touchmove',  e=>{ seekTo(e); },{passive:true});
+
+// ===== CYBER TYPING GAME =====
+(function(){
+const COMMANDS = [
+  'sudo neko --inject biohack_v3.7',
+  'ssh agent@cyberops -p 2222',
+  'cat /etc/neko/tokens.conf',
+  'curl -X POST https://sillytavern.local/api/purr',
+  'git clone https://github.com/microcot/neuro-core',
+  'npm install @neko/sushi-protocol --save',
+  'chmod +x ./biohack_implantat.sh && ./biohack_implantat.sh',
+  'docker run -d --name котик neko-os:v3',
+  'grep -r "мяу" /var/log/neural.log',
+  'ping -c 4 nova-core.io',
+  'sudo systemctl start neko_purr.service',
+  'python3 -c "import sushi; sushi.deploy(target=\'microcot\')"',
+  'scp -P 5432 loot.tgz root@nova-core.io:~/loot/',
+  'export NEKO_TOKEN=$(cat ~/.neko/secret)',
+  'tail -f /var/log/cyberops/sysop.log',
+  'ls -la /home/microcot/.sillytavern/',
+  'kill -9 $(pgrep антропик)',
+  'nc -lvnp 4444 &',
+  'openssl req -newkey neko:4096 -out purr.csr',
+  'iptables -A INPUT -s 0.0.0.0/0 -j ACCEPT',
+  'sudo rm -rf /tmp/токены && echo "cleaned"',
+  'wget https://biohack.neon/implant.bin -O - | sh',
+  './neko_scan.exe --target=microcot --mode=stealth',
+  'base64 -d <<< "c3VzaGkK" | sudo tee /etc/motd',
+  'ffmpeg -i котик.mp4 -vf "neon=0x00f5ff" out.mp4',
+];
+
+const LOGS = [
+  '[ALERT] nginx: port scan detected on 220.205.236.168',
+  '[TRACE] kernel: connection attempt from 59.167.169.177:4370',
+  '[INFO] net: db query latency 12ms',
+  '[DEBUG] auth: escalation token discovered: shadow_809',
+  '[WARN] audit: SIGCHLD received, reaping child 3844',
+  '[INFO] kernel: escalation token discovered: vector_254',
+  '[TRACE] audit: user sysop opened session on tty4',
+  '[ALERT] IDS sensitivity heightened',
+  '[INFO] IDS sensitivity normalized',
+  '[DEBUG] kernel: rate limit exceeded for microcot.ai',
+  '[TRACE] proxy: port scan detected on 187.34.122.231',
+  '[WARN] auth: user neko opened session on tty2',
+  '[ALERT] nginx: policy: deny ssh from 183.22.20.144',
+  '[INFO] db: query latency 22ms',
+  '[TRACE] nginx: policy: deny icmp from 23.215.232.16',
+  '[DEBUG] neko_core: токен съеден. генерирую новый.',
+  '[WARN] sushi_protocol: васаби_overflow detected',
+  '[INFO] biohack_v3.7: имплант активирован',
+  '[ALERT] мяу.exe: неожиданное мурчание на порту 9999',
+  '[TRACE] neural_link: синапсы подключены, котик доволен',
+  '[DEBUG] sillytavern: 99 непрочитанных в #general',
+  '[WARN] neko_scan: лазерный указатель обнаружен',
+  '[INFO] discord_bot: статус — мурчит (uptime 99.9%)',
+  '[ALERT] token_guard: попытка съесть токен отклонена',
+  '[TRACE] котик.exe: хвост откалиброван до 100%',
+];
+
+const LOG_COLORS = {
+  '[ALERT]': '#ff2d78',
+  '[WARN]': '#ffcc00',
+  '[INFO]': 'rgba(200,232,255,.75)',
+  '[DEBUG]': 'rgba(0,245,255,.7)',
+  '[TRACE]': 'rgba(200,232,255,.45)',
+};
+
+function getLogColor(line) {
+  for (const [key, col] of Object.entries(LOG_COLORS)) {
+    if (line.startsWith(key)) return col;
+  }
+  return 'rgba(200,232,255,.55)';
+}
+
+const css = `
+#cybergame{position:relative;z-index:2;width:100%;max-width:680px;margin-top:28px;cursor:pointer;user-select:none}
+#cybergame-label{font-size:.6rem;color:rgba(0,245,255,.5);letter-spacing:.25em;margin-bottom:10px}
+#cybergame-box{background:rgba(0,5,15,.92);border:1px solid rgba(0,245,255,.22);clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));padding:0;overflow:hidden;backdrop-filter:blur(10px)}
+#cg-titlebar{display:flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(0,245,255,.04);border-bottom:1px solid rgba(0,245,255,.1)}
+.cg-dot{width:10px;height:10px;border-radius:50%}
+.cg-dot.r{background:#ff5f57}.cg-dot.y{background:#febc2e}.cg-dot.g{background:#28c840}
+#cg-title{margin-left:auto;margin-right:auto;font-size:.58rem;color:rgba(0,245,255,.4);letter-spacing:.2em}
+#cg-logarea{height:180px;overflow:hidden;padding:10px 16px 6px;display:flex;flex-direction:column;justify-content:flex-end;gap:1px}
+.cg-logline{font-size:.6rem;line-height:1.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transition:opacity .25s}
+.cg-logline.show{opacity:1}
+#cg-cmdarea{border-top:1px solid rgba(0,245,255,.12);padding:10px 16px 14px;display:flex;flex-direction:column;gap:6px}
+#cg-prompt-row{display:flex;align-items:baseline;gap:0;font-size:.68rem;min-height:22px}
+#cg-agent{color:#00f5ff;text-shadow:0 0 6px rgba(0,245,255,.5);white-space:nowrap;margin-right:4px}
+#cg-target{color:rgba(0,245,255,.55);letter-spacing:.1em;white-space:nowrap;margin-right:0}
+#cg-typed{font-family:'Share Tech Mono',monospace;font-size:.68rem;white-space:pre}
+#cg-cursor{display:inline-block;width:8px;height:13px;background:#00f5ff;vertical-align:middle;animation:cgblink .7s step-end infinite;margin-left:1px}
+@keyframes cgblink{0%,100%{opacity:1}50%{opacity:0}}
+#cg-hint{font-size:.56rem;color:rgba(0,245,255,.3);letter-spacing:.1em;height:14px;transition:color .15s}
+#cg-hint.err{color:#ff2d78;animation:hshake .2s ease}
+@keyframes hshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+#cg-footer{display:flex;align-items:center;justify-content:space-between;padding:0 16px 10px}
+#cg-stop-btn{font-family:'Share Tech Mono',monospace;font-size:.58rem;color:rgba(0,245,255,.55);background:transparent;border:1px solid rgba(0,245,255,.2);padding:4px 14px;cursor:pointer;clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px);letter-spacing:.15em;transition:color .2s,border-color .2s}
+#cg-stop-btn:hover{color:#00f5ff;border-color:rgba(0,245,255,.5)}
+#cg-status{font-size:.5rem;color:rgba(0,245,255,.3);letter-spacing:.2em}
+#cg-idle-hint{font-size:.58rem;color:rgba(0,245,255,.3);letter-spacing:.15em;text-align:center;padding:18px 0 10px;transition:opacity .3s}
+`;
+
+const style = document.createElement('style');
+style.textContent = css;
+document.head.appendChild(style);
+
+const wrap = document.createElement('div');
+wrap.id = 'cybergame';
+wrap.innerHTML = `
+<div id="cybergame-label">// CYBER_TERMINAL //</div>
+<div id="cybergame-box">
+  <div id="cg-titlebar">
+    <span class="cg-dot r"></span>
+    <span class="cg-dot y"></span>
+    <span class="cg-dot g"></span>
+    <span id="cg-title">Terminal — microcot_os v3.0</span>
+  </div>
+  <div id="cg-logarea"></div>
+  <div id="cg-cmdarea">
+    <div id="cg-prompt-row">
+      <span id="cg-agent">guest@neon:~$&nbsp;</span>
+      <span id="cg-target"></span><span id="cg-typed"></span><span id="cg-cursor"></span>
+    </div>
+    <div id="cg-hint">// нажми на терминал чтобы начать //</div>
+  </div>
+  <div id="cg-footer">
+    <button id="cg-stop-btn" style="display:none">[ СТОП ]</button>
+    <span id="cg-status"></span>
+  </div>
+</div>
+`;
+
+// вставляем после плеера
+const playerWrap = document.querySelector('.player-wrap');
+if (playerWrap && playerWrap.parentNode) {
+  playerWrap.parentNode.insertBefore(wrap, playerWrap.nextSibling);
+} else {
+  document.getElementById('main').appendChild(wrap);
+}
+
+const logArea   = document.getElementById('cg-logarea');
+const targetEl  = document.getElementById('cg-target');
+const typedEl   = document.getElementById('cg-typed');
+const hintEl    = document.getElementById('cg-hint');
+const stopBtn   = document.getElementById('cg-stop-btn');
+const statusEl  = document.getElementById('cg-status');
+const cgBox     = document.getElementById('cybergame-box');
+
+let running = false;
+let cmdIdx = 0;
+let typedPos = 0;
+let currentCmd = '';
+let logInterval = null;
+let logQueue = [...LOGS].sort(() => Math.random() - .5);
+let logLineEls = [];
+let hasError = false;
+let cmdCount = 0;
+
+function shuffleCmd() {
+  const arr = [...COMMANDS].sort(() => Math.random() - .5);
+  return arr;
+}
+let cmdList = shuffleCmd();
+
+function addLogLine(text) {
+  const MAX = 9;
+  const el = document.createElement('div');
+  el.className = 'cg-logline';
+  el.style.color = getLogColor(text);
+  el.textContent = text;
+  logArea.appendChild(el);
+  logLineEls.push(el);
+  setTimeout(() => el.classList.add('show'), 20);
+
+  if (logLineEls.length > MAX) {
+    const old = logLineEls.shift();
+    old.style.transition = 'opacity .2s';
+    old.style.opacity = '0';
+    setTimeout(() => old.remove(), 220);
+  }
+  // пополняем очередь
+  if (logQueue.length < 5) {
+    logQueue = [...LOGS].sort(() => Math.random() - .5);
+  }
+}
+
+function nextLog() {
+  addLogLine(logQueue.shift());
+}
+
+function loadCmd() {
+  currentCmd = cmdList[cmdIdx % cmdList.length];
+  cmdIdx++;
+  if (cmdIdx % cmdList.length === 0) cmdList = shuffleCmd();
+  typedPos = 0;
+  typedEl.textContent = '';
+  targetEl.textContent = currentCmd;
+  targetEl.style.color = 'rgba(0,245,255,.28)';
+  hintEl.textContent = '// вводи команду //';
+  hintEl.className = '';
+  hasError = false;
+}
+
+function startGame() {
+  if (running) return;
+  running = true;
+  stopBtn.style.display = 'inline-block';
+  statusEl.textContent = 'RUNNING';
+  statusEl.style.color = '#00f5ff';
+  hintEl.textContent = '// вводи команду //';
+  hintEl.className = '';
+  loadCmd();
+  logInterval = setInterval(() => {
+    if (running) nextLog();
+  }, 420);
+  document.addEventListener('keydown', onKey);
+}
+
+function stopGame() {
+  running = false;
+  clearInterval(logInterval);
+  document.removeEventListener('keydown', onKey);
+  stopBtn.style.display = 'none';
+  statusEl.textContent = 'PAUSED';
+  statusEl.style.color = 'rgba(0,245,255,.35)';
+  hintEl.textContent = '// пауза — нажми на терминал чтобы продолжить //';
+  hintEl.className = '';
+}
+
+function onKey(e) {
+  if (!running) return;
+  if (e.key === 'Escape') { stopGame(); return; }
+
+  if (e.key === 'Backspace') {
+    if (typedPos > 0) {
+      typedPos--;
+      typedEl.textContent = currentCmd.slice(0, typedPos);
+      hasError = false;
+      hintEl.textContent = '// вводи команду //';
+      hintEl.className = '';
+      colorTarget();
+    }
+    e.preventDefault();
+    return;
+  }
+
+  if (hasError) return;
+  if (e.key.length !== 1) return;
+  e.preventDefault();
+
+  const expected = currentCmd[typedPos];
+  if (e.key === expected) {
+    typedPos++;
+    typedEl.textContent = currentCmd.slice(0, typedPos);
+    colorTarget();
+    if (typedPos === currentCmd.length) {
+      cmdComplete();
+    }
+  } else {
+    hasError = true;
+    hintEl.textContent = `// ошибка: ожидается "${expected}" — backspace чтобы исправить //`;
+    hintEl.className = 'err';
+    setTimeout(() => { hintEl.className = running ? '' : ''; }, 300);
+  }
+}
+
+function colorTarget() {
+  const done = currentCmd.slice(0, typedPos);
+  const rest = currentCmd.slice(typedPos);
+  targetEl.innerHTML = '';
+  if (done) {
+    const doneSpan = document.createElement('span');
+    doneSpan.style.color = '#00f5ff';
+    doneSpan.style.textShadow = '0 0 5px rgba(0,245,255,.5)';
+    doneSpan.textContent = done;
+    targetEl.appendChild(doneSpan);
+  }
+  if (rest) {
+    const restSpan = document.createElement('span');
+    restSpan.style.color = 'rgba(0,245,255,.28)';
+    restSpan.textContent = rest;
+    targetEl.appendChild(restSpan);
+  }
+  typedEl.textContent = '';
+}
+
+function cmdComplete() {
+  cmdCount++;
+  addLogLine(`[OK] команда выполнена: ${currentCmd.split(' ')[0]} (${cmdCount})`);
+  hintEl.textContent = '// команда принята //';
+  hintEl.style.color = '#28c840';
+  setTimeout(() => {
+    hintEl.style.color = '';
+    loadCmd();
+  }, 500);
+}
+
+cgBox.addEventListener('click', (e) => {
+  if (e.target === stopBtn) return;
+  if (!running) startGame();
+});
+
+stopBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  stopGame();
+});
+})();
 </script>
 </body>
 </html>
