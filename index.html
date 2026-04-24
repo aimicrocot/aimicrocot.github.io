@@ -1056,15 +1056,16 @@ function onKey(e) {
   if (e.key === expected) {
     typedPos++;
     hasError = false;
-    renderTarget();
+    typedEl.textContent = currentCmd.slice(0, typedPos);
+    colorTarget();
     hintEl.textContent = '// вводи команду //';
-    hintEl.className   = '';
+    hintEl.className = '';
     hintEl.style.color = '';
     if (typedPos === currentCmd.length) cmdComplete();
   } else {
     hasError = true;
     hintEl.textContent = `// ошибка: ожидается "${expected}" //`;
-    hintEl.className   = 'err';
+    hintEl.className = 'err';
     setTimeout(() => { if(running) hintEl.className = ''; }, 400);
   }
 
