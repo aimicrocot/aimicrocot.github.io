@@ -1063,7 +1063,7 @@ function onKey(e) {
     }
   } else {
     hasError = true;
-    hintEl.textContent = `// ошибка: ожидается "${expected}" — backspace чтобы исправить //`;
+    hintEl.textContent = `// ошибка: ожидается "${expected}" //`;
     hintEl.className = 'err';
     setTimeout(() => { hintEl.className = running ? '' : ''; }, 300);
   }
