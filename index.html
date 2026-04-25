@@ -897,6 +897,7 @@ function getLogColor(line) {
 
 const css = `
 #cybergame{position:relative;z-index:2;width:100%;max-width:680px;margin-top:28px;cursor:pointer;user-select:none}
+#cybergame-label{font-size:.6rem;color:rgba(0,245,255,.5);letter-spacing:.25em;margin-bottom:10px}
 #cybergame-box{background:rgba(0,12,30,.82);border:1px solid rgba(0,245,255,.2);clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));padding:0;overflow:hidden;backdrop-filter:blur(10px)}
 #cg-titlebar{display:flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(0,12,30,.6);border-bottom:1px solid rgba(0,245,255,.12)}
 .cg-dot{width:10px;height:10px;border-radius:50%}
@@ -941,6 +942,7 @@ document.head.appendChild(style);
 const wrap = document.createElement('div');
 wrap.id = 'cybergame';
 wrap.innerHTML = `
+<div id="cybergame-label">CYBER_TERMINAL</div>
 <div id="cybergame-box">
   <div id="cg-titlebar">
     <span class="cg-dot r"></span>
