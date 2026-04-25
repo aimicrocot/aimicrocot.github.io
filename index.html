@@ -930,8 +930,10 @@ const css = `
   #cg-prompt-row{font-size:.52rem;flex-wrap:nowrap;overflow:hidden;max-width:100%}
   #cg-agent{font-size:.52rem;flex-shrink:0;white-space:nowrap}
   #cg-target{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100% - 120px);display:inline-block;vertical-align:bottom}
-  #cg-typed{font-size:0;width:0;overflow:hidden}
-  #cg-cursor{flex-shrink:0;vertical-align:text-bottom}
+  #cg-typed{display:none}
+  #cg-cursor{display:none}
+  #cg-target{position:relative}
+  #cg-target::after{content:'';display:inline-block;width:7px;height:1em;background:#00f5ff;vertical-align:text-bottom;margin-left:1px;animation:cgblink .7s step-end infinite}
   #cg-logarea{height:140px;padding:8px 10px 4px}
   .cg-logline{font-size:.52rem;white-space:normal;word-break:break-word}
   #cg-cmdarea{padding:8px 10px 10px}
@@ -1132,16 +1134,10 @@ function colorTarget() {
   targetEl.innerHTML = '';
   if (done) {
     const doneSpan = document.createElement('span');
-    doneSpan.id = 'cg-target-done';
     doneSpan.style.color = '#00f5ff';
     doneSpan.style.textShadow = '0 0 5px rgba(0,245,255,.5)';
     doneSpan.textContent = done;
     targetEl.appendChild(doneSpan);
-  } else {
-    // нет введённых символов — курсор на пустом span
-    const emptySpan = document.createElement('span');
-    emptySpan.id = 'cg-target-done';
-    targetEl.insertBefore(emptySpan, targetEl.firstChild);
   }
   if (rest) {
     const restSpan = document.createElement('span');
@@ -1149,7 +1145,7 @@ function colorTarget() {
     restSpan.textContent = rest;
     targetEl.appendChild(restSpan);
   }
-    typedEl.textContent = currentCmd.slice(0, typedPos);
+  typedEl.textContent = '';
 }
 
 function cmdComplete() {
