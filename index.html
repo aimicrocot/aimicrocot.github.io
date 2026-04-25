@@ -834,6 +834,29 @@ const COMMANDS = [
   'ffmpeg -i котик.mp4 -vf "neon=0x00f5ff" out.mp4',
 ];
 
+const COMMANDS_MOBILE = [
+  'sudo neko --inject',
+  'ssh agent@cyberops',
+  'cat /etc/neko/tokens.conf',
+  'ping -c 4 nova-core.io',
+  'ls -la ~/.sillytavern/',
+  'kill -9 $(pgrep neko)',
+  'nc -lvnp 4444 &',
+  'git pull origin main',
+  'docker ps -a',
+  'npm run build',
+  'grep -r "мяу" /var/log/',
+  'tail -f sysop.log',
+  'chmod +x ./neko.sh',
+  'export NEKO=active',
+  'echo "мяу" > /dev/null',
+  'curl https://neko.local/purr',
+  'rm -rf /tmp/токены',
+  'docker start котик',
+  'systemctl status neko',
+  'whoami && hostname',
+];
+
 const LOGS = [
   '[ALERT] nginx: port scan detected on 220.205.236.168',
   '[TRACE] kernel: connection attempt from 59.167.169.177:4370',
@@ -975,7 +998,8 @@ let hasError = false;
 let cmdCount = 0;
 
 function shuffleCmd() {
-  const arr = [...COMMANDS].sort(() => Math.random() - .5);
+  const src = window.innerWidth <= 600 ? COMMANDS_MOBILE : COMMANDS;
+  const arr = [...src].sort(() => Math.random() - .5);
   return arr;
 }
 let cmdList = shuffleCmd();
