@@ -942,7 +942,6 @@ document.head.appendChild(style);
 const wrap = document.createElement('div');
 wrap.id = 'cybergame';
 wrap.innerHTML = `
-<div id="cybergame-label">// CYBER_TERMINAL //</div>
 <div id="cybergame-box">
   <div id="cg-titlebar">
     <span class="cg-dot r"></span>
@@ -971,7 +970,7 @@ const playerWrap = document.querySelector('.player-wrap');
 if (playerWrap && playerWrap.parentNode) {
   const divider = document.createElement('div');
   divider.className = 'player-divider';
-  divider.innerHTML = '<div class="pdiv-inner"><div class="pdiv-code">// CYBER_TERMINAL LOADED //</div></div>';
+  divider.innerHTML = '<div class="pdiv-inner"><div class="pdiv-code">// CYBER_TERMINAL //</div></div>';
   playerWrap.parentNode.insertBefore(divider, playerWrap.nextSibling);
   playerWrap.parentNode.insertBefore(wrap, divider.nextSibling);
 } else {
