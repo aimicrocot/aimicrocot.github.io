@@ -1098,11 +1098,6 @@ function onKey(e) {
     if (typedPos === currentCmd.length) {
       cmdComplete();
     }
-  } else {
-    // Подсказка об ошибке без блокировки ввода
-    hintEl.textContent = `// ошибка: ожидается "${expected}" //`;
-    hintEl.className = 'err';
-    setTimeout(() => { if(running) hintEl.className = ''; }, 300);
   }
 }
 
@@ -1121,10 +1116,6 @@ function onMobileInput(e) {
     hintEl.textContent = '// вводи команду //';
     hintEl.className = '';
     if (typedPos === currentCmd.length) cmdComplete();
-  } else {
-    hintEl.textContent = `// ошибка: ожидается "${currentCmd[typedPos]}" //`;
-    hintEl.className = 'err';
-    setTimeout(() => { if (running) hintEl.className = ''; }, 300);
   }
 }
 
