@@ -1134,17 +1134,8 @@ function colorTarget() {
     targetEl.appendChild(restSpan);
   }
   typedEl.textContent = '';
-  // Перемещаем курсор внутрь target сразу после введённых символов
   const cursorEl = document.getElementById('cg-cursor');
   if (cursorEl) targetEl.appendChild(cursorEl);
-}
-  if (rest) {
-    const restSpan = document.createElement('span');
-    restSpan.style.color = 'rgba(0,245,255,.28)';
-    restSpan.textContent = rest;
-    targetEl.appendChild(restSpan);
-  }
-  typedEl.textContent = '';
 }
 
 function cmdComplete() {
