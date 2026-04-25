@@ -930,6 +930,7 @@ wrap.innerHTML = `
   </div>
   <div id="cg-footer">
     <button id="cg-stop-btn" style="display:none">[ STOP ]</button>
+    <input id="cg-mobile-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" style="position:absolute;opacity:0;width:1px;height:1px;top:0;left:0;border:none;outline:none;pointer-events:none;z-index:-1;">
     <span id="cg-status"></span>
   </div>
 </div>
@@ -1019,12 +1020,20 @@ function startGame() {
     if (running) nextLog();
   }, 5000);
   document.addEventListener('keydown', onKey);
+  // Мобильный ввод: фокусируем скрытый input чтобы открылась клавиатура
+  const mobileInput = document.getElementById('cg-mobile-input');
+  mobileInput.value = '';
+  mobileInput.focus();
+  mobileInput.addEventListener('input', onMobileInput);
 }
 
 function stopGame() {
   running = false;
   clearInterval(logInterval);
   document.removeEventListener('keydown', onKey);
+  const mobileInput = document.getElementById('cg-mobile-input');
+  mobileInput.blur();
+  mobileInput.removeEventListener('input', onMobileInput);
   stopBtn.style.display = 'none';
   statusEl.textContent = 'PAUSED';
   statusEl.style.color = 'rgba(0,245,255,.35)';
@@ -1061,6 +1070,28 @@ function onKey(e) {
   }
 }
 
+function onMobileInput(e) {
+  if (!running) return;
+  const mobileInput = document.getElementById('cg-mobile-input');
+  const val = mobileInput.value;
+  if (!val) return;
+  // Берём последний введённый символ
+  const char = val[val.length - 1];
+  mobileInput.value = '';
+
+  if (char === currentCmd[typedPos]) {
+    typedPos++;
+    colorTarget();
+    hintEl.textContent = '// вводи команду //';
+    hintEl.className = '';
+    if (typedPos === currentCmd.length) cmdComplete();
+  } else {
+    hintEl.textContent = `// ошибка: ожидается "${currentCmd[typedPos]}" //`;
+    hintEl.className = 'err';
+    setTimeout(() => { if (running) hintEl.className = ''; }, 300);
+  }
+}
+
 function colorTarget() {
   const done = currentCmd.slice(0, typedPos);
   const rest = currentCmd.slice(typedPos);
@@ -1094,7 +1125,13 @@ function cmdComplete() {
 
 cgBox.addEventListener('click', (e) => {
   if (e.target === stopBtn) return;
-  if (!running) startGame();
+  if (!running) {
+    startGame();
+  } else {
+    // Повторный тап — снова фокусируем чтобы клавиатура не пропала
+    const mobileInput = document.getElementById('cg-mobile-input');
+    mobileInput.focus();
+  }
 });
 
 stopBtn.addEventListener('click', (e) => {
