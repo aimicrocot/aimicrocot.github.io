@@ -926,9 +926,8 @@ const css = `
   #cg-agent{font-size:.65rem;flex-shrink:0;white-space:nowrap}
   #cg-target{white-space:nowrap;overflow:hidden;max-width:calc(100% - 140px);display:inline-block;vertical-align:bottom}
   #cg-typed{display:none}
-  #cg-cursor{display:none}
+  #cg-cursor{display:inline-block}
   #cg-target{position:relative}
-  #cg-target::after{content:'';display:inline-block;width:8px;height:1em;background:#00f5ff;vertical-align:text-bottom;margin-left:1px;animation:cgblink .7s step-end infinite}
   #cg-logarea{height:160px;padding:8px 10px 4px}
   .cg-logline{font-size:.65rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #cg-cmdarea{padding:8px 10px 10px}
@@ -1128,6 +1127,17 @@ function colorTarget() {
     doneSpan.textContent = done;
     targetEl.appendChild(doneSpan);
   }
+  if (rest) {
+    const restSpan = document.createElement('span');
+    restSpan.style.color = 'rgba(0,245,255,.28)';
+    restSpan.textContent = rest;
+    targetEl.appendChild(restSpan);
+  }
+  typedEl.textContent = '';
+  // Перемещаем курсор внутрь target сразу после введённых символов
+  const cursorEl = document.getElementById('cg-cursor');
+  if (cursorEl) targetEl.appendChild(cursorEl);
+}
   if (rest) {
     const restSpan = document.createElement('span');
     restSpan.style.color = 'rgba(0,245,255,.28)';
