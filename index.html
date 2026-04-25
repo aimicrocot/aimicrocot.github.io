@@ -893,7 +893,7 @@ const css = `
 #cg-agent{color:#00f5ff;text-shadow:0 0 6px rgba(0,245,255,.5);white-space:nowrap;margin-right:4px}
 #cg-target{color:rgba(0,245,255,.55);letter-spacing:.1em;white-space:nowrap;margin-right:0}
 #cg-typed{font-family:'Share Tech Mono',monospace;font-size:.68rem;white-space:pre}
-#cg-cursor{display:inline-block;width:8px;height:13px;background:#00f5ff;vertical-align:middle;animation:cgblink .7s step-end infinite;margin-left:1px}
+#cg-cursor{display:inline-block;width:8px;height:13px;background:#00f5ff;vertical-align:text-bottom;animation:cgblink .7s step-end infinite;margin-left:1px}
 @keyframes cgblink{0%,100%{opacity:1}50%{opacity:0}}
 #cg-hint{font-size:.56rem;color:rgba(0,245,255,.3);letter-spacing:.1em;height:14px;transition:color .15s}
 #cg-hint.err{color:#ff2d78;animation:hshake .2s ease}
@@ -907,8 +907,8 @@ const css = `
   #cg-prompt-row{font-size:.52rem;flex-wrap:nowrap;overflow:hidden;max-width:100%}
   #cg-agent{font-size:.52rem;flex-shrink:0;white-space:nowrap}
   #cg-target{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100% - 120px);display:inline-block;vertical-align:bottom}
-  #cg-typed{display:none}
-  #cg-cursor{flex-shrink:0}
+  #cg-typed{font-size:0;width:0;overflow:hidden}
+  #cg-cursor{flex-shrink:0;vertical-align:text-bottom}
   #cg-logarea{height:140px;padding:8px 10px 4px}
   .cg-logline{font-size:.52rem;white-space:normal;word-break:break-word}
   #cg-cmdarea{padding:8px 10px 10px}
