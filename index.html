@@ -1180,36 +1180,12 @@ const KEY_PARTS = [
 const FULL_KEY = KEY_PARTS.join('');
 
 const POOL = [
-  {
-    id: 'kh-sysbar',
-    selector: '.sys-bar',
-    label: 'sys-bar'
-  },
-  {
-    id: 'kh-btnsupdated',
-    selector: '.player-divider:nth-of-type(1)',
-    label: 'buttons-updated'
-  },
-  {
-    id: 'kh-audiomodule',
-    selector: '.player-divider:nth-of-type(2)',
-    label: 'audio-module'
-  },
-  {
-    id: 'kh-cyberterminal',
-    selector: '.player-divider:nth-of-type(3)',
-    label: 'cyber-terminal'
-  },
-  {
-    id: 'kh-playerlabel',
-    selector: '.player-label',
-    label: 'player-label'
-  },
-  {
-    id: 'kh-playersub',
-    selector: '.player-sub',
-    label: 'player-sub'
-  }
+  { selector: '.sys-bar' },
+  { selector: '.player-label' },
+  { selector: '.player-title' },
+  { selector: '.player-sub' },
+  { selector: '.pdiv-code', index: 0 },
+  { selector: '.pdiv-code', index: 1 },
 ];
 
 // состояние
@@ -1227,11 +1203,16 @@ function shuffle(arr) {
 }
 
 function assignSlots() {
-  // чистим старые обёртки
-  document.querySelectorAll('.kh-wrapper').forEach(el => {
-    const parent = el.parentNode;
-    while (el.firstChild) parent.insertBefore(el.firstChild, el);
-    parent.removeChild(el);
+  // чистим старые обёртки — восстанавливаем оригинальный текст
+  document.querySelectorAll('.kh-letter').forEach(span => {
+    const parent = span.parentNode;
+    parent.textContent = parent.textContent; // сбросим через общий метод ниже
+  });
+  // полная очистка: заменяем innerHTML элементов обратно на textContent
+  document.querySelectorAll('.kh-target').forEach(el => {
+    el.textContent = el.dataset.origText || el.textContent;
+    el.removeAttribute('data-orig-text');
+    el.classList.remove('kh-target');
   });
   document.querySelectorAll('.kh-tooltip').forEach(el => el.remove());
 
@@ -1242,22 +1223,34 @@ function assignSlots() {
   assignments = chosen.map((item, i) => ({ poolItem: item, partIndex: partOrder[i] }));
 
   assignments.forEach((slot, slotIdx) => {
-    const target = document.querySelector(slot.poolItem.selector);
+    const all = document.querySelectorAll(slot.poolItem.selector);
+    const idx = slot.poolItem.index ?? 0;
+    const target = all[idx];
     if (!target) return;
 
-    // оборачиваем в кликабельный wrapper
-    const wrapper = document.createElement('span');
-    wrapper.className = 'kh-wrapper';
-    wrapper.dataset.slot = slotIdx;
-    wrapper.style.cssText = 'cursor:pointer;position:relative;display:inline-block;';
+    const text = target.textContent;
+    // выбираем случайную букву (только буквы/цифры, не пробелы и не спецсимволы)
+    const validIndices = [...text].map((ch, i) => /[\wа-яёА-ЯЁ]/i.test(ch) ? i : -1).filter(i => i !== -1);
+    if (!validIndices.length) return;
+    const charIdx = validIndices[Math.floor(Math.random() * validIndices.length)];
 
-    // вставляем wrapper вокруг target
-    target.parentNode.insertBefore(wrapper, target);
-    wrapper.appendChild(target);
+    // сохраняем оригинал
+    target.dataset.origText = text;
+    target.classList.add('kh-target');
 
-    wrapper.addEventListener('click', function(e) {
+    // разбиваем на spans
+    const before = text.slice(0, charIdx);
+    const letter = text[charIdx];
+    const after = text.slice(charIdx + 1);
+
+    target.innerHTML =
+      (before ? `<span>${before}</span>` : '') +
+      `<span class="kh-letter" data-slot="${slotIdx}" style="cursor:pointer;">${letter}</span>` +
+      (after ? `<span>${after}</span>` : '');
+
+    target.querySelector(`.kh-letter[data-slot="${slotIdx}"]`).addEventListener('click', function(e) {
       e.stopPropagation();
-      onSlotClick(slotIdx, wrapper);
+      onSlotClick(slotIdx, this);
     });
   });
 
