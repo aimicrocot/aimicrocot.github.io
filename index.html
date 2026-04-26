@@ -1167,6 +1167,317 @@ stopBtn.addEventListener('click', (e) => {
   stopGame();
 });
 })();
+// ===== KEY HUNT GAME =====
+(function(){
+
+const KEY_PARTS = [
+  'sk-ant-api03-4n9kL2m5T',
+  'Q7r8Z3vXyW1aB9cDeF3gHi',
+  'JkLmNoPqRsTuVwX1yZ2AbC4',
+  'dE5fG6hI7jK8lM9nO0pQ'
+];
+
+const FULL_KEY = KEY_PARTS.join('');
+
+const POOL = [
+  {
+    id: 'kh-sysbar',
+    selector: '.sys-bar',
+    label: 'sys-bar'
+  },
+  {
+    id: 'kh-btnsupdated',
+    selector: '.player-divider:nth-of-type(1)',
+    label: 'buttons-updated'
+  },
+  {
+    id: 'kh-audiomodule',
+    selector: '.player-divider:nth-of-type(2)',
+    label: 'audio-module'
+  },
+  {
+    id: 'kh-cyberterminal',
+    selector: '.player-divider:nth-of-type(3)',
+    label: 'cyber-terminal'
+  },
+  {
+    id: 'kh-playerlabel',
+    selector: '.player-label',
+    label: 'player-label'
+  },
+  {
+    id: 'kh-playersub',
+    selector: '.player-sub',
+    label: 'player-sub'
+  },
+  {
+    id: 'kh-agent',
+    selector: '#cg-agent',
+    label: 'cg-agent'
+  }
+];
+
+// состояние
+let foundParts = {};   // { slotIndex: true }
+let assignments = [];  // [{poolItem, partIndex}] — 4 активных слота
+let failed = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function assignSlots() {
+  // чистим старые обёртки
+  document.querySelectorAll('.kh-wrapper').forEach(el => {
+    const parent = el.parentNode;
+    while (el.firstChild) parent.insertBefore(el.firstChild, el);
+    parent.removeChild(el);
+  });
+  document.querySelectorAll('.kh-tooltip').forEach(el => el.remove());
+
+  foundParts = {};
+  const poolShuffled = shuffle(POOL);
+  const chosen = poolShuffled.slice(0, 4);
+  const partOrder = shuffle([0,1,2,3]);
+  assignments = chosen.map((item, i) => ({ poolItem: item, partIndex: partOrder[i] }));
+
+  assignments.forEach((slot, slotIdx) => {
+    const target = document.querySelector(slot.poolItem.selector);
+    if (!target) return;
+
+    // оборачиваем в кликабельный wrapper
+    const wrapper = document.createElement('span');
+    wrapper.className = 'kh-wrapper';
+    wrapper.dataset.slot = slotIdx;
+    wrapper.style.cssText = 'cursor:pointer;position:relative;display:inline-block;';
+
+    // вставляем wrapper вокруг target
+    target.parentNode.insertBefore(wrapper, target);
+    wrapper.appendChild(target);
+
+    wrapper.addEventListener('click', function(e) {
+      e.stopPropagation();
+      onSlotClick(slotIdx, wrapper);
+    });
+  });
+
+  updateInputHint();
+}
+
+function onSlotClick(slotIdx, wrapper) {
+  if (foundParts[slotIdx]) return;
+  foundParts[slotIdx] = true;
+
+  const slot = assignments[slotIdx];
+  const part = KEY_PARTS[slot.partIndex];
+  const partNum = slot.partIndex + 1;
+
+  // копируем в буфер
+  try { navigator.clipboard.writeText(part); } catch(e) {}
+
+  // показываем тултип
+  const tip = document.createElement('div');
+  tip.className = 'kh-tooltip';
+  tip.innerHTML = `<span style="color:rgba(0,245,255,.5);font-size:.5rem;letter-spacing:.2em;">// FRAGMENT_${partNum} FOUND //</span><br><span style="color:#00f5ff;font-size:.7rem;letter-spacing:.1em;">${part}</span><br><span style="color:rgba(0,245,255,.4);font-size:.48rem;">скопировано в буфер</span>`;
+  tip.style.cssText = `
+    position:fixed;
+    z-index:99999;
+    background:rgba(0,10,25,.97);
+    border:1px solid rgba(0,245,255,.4);
+    padding:10px 16px;
+    font-family:'Share Tech Mono',monospace;
+    line-height:1.8;
+    box-shadow:0 0 18px rgba(0,245,255,.25);
+    clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+    pointer-events:none;
+    text-align:center;
+    white-space:nowrap;
+  `;
+
+  document.body.appendChild(tip);
+
+  // позиционируем
+  const rect = wrapper.getBoundingClientRect();
+  let top = rect.bottom + 8 + window.scrollY;
+  let left = rect.left + rect.width/2 - 120;
+  left = Math.max(8, Math.min(left, window.innerWidth - 260));
+  tip.style.top = top + 'px';
+  tip.style.left = left + 'px';
+
+  setTimeout(() => {
+    tip.style.transition = 'opacity .5s ease, transform .5s ease';
+    tip.style.opacity = '0';
+    tip.style.transform = 'translateY(-10px)';
+    setTimeout(() => tip.remove(), 500);
+  }, 2200);
+
+  // подсвечиваем wrapper
+  wrapper.style.color = '#00f5ff';
+  wrapper.style.textShadow = '0 0 8px rgba(0,245,255,.8)';
+
+  updateInputHint();
+  updateFoundCounter();
+}
+
+function updateFoundCounter() {
+  const count = Object.keys(foundParts).length;
+  const el = document.getElementById('kh-counter');
+  if (el) {
+    el.textContent = `FRAGMENTS: ${count}/4`;
+    el.style.color = count === 4 ? '#00f5ff' : 'rgba(0,245,255,.4)';
+  }
+}
+
+function updateInputHint() {
+  const count = Object.keys(foundParts).length;
+  const hint = document.getElementById('kh-input-hint');
+  if (!hint) return;
+  if (count < 4) {
+    hint.textContent = `// найди все 4 фрагмента (${count}/4) //`;
+  } else {
+    hint.textContent = '// все фрагменты найдены — вводи ключ //';
+    hint.style.color = '#00f5ff';
+  }
+}
+
+// ===== ПОЛЕ ВВОДА =====
+function buildInputBlock() {
+  const divider = document.createElement('div');
+  divider.className = 'player-divider';
+  divider.style.marginTop = '22px';
+  divider.innerHTML = '<div class="pdiv-inner"><div class="pdiv-code">// API_KEY_INPUT //</div></div>';
+
+  const wrap = document.createElement('div');
+  wrap.id = 'kh-input-wrap';
+  wrap.style.cssText = `
+    position:relative;z-index:2;width:100%;max-width:680px;margin-top:0px;margin-bottom:40px;
+  `;
+
+  wrap.innerHTML = `
+    <div class="player-inner" style="flex-direction:column;gap:10px;padding:18px 20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;width:100%">
+        <div style="font-family:'Orbitron',sans-serif;font-size:.72rem;font-weight:700;color:var(--c);letter-spacing:.1em;text-shadow:0 0 8px rgba(0,245,255,.6);">API KEY VERIFY</div>
+        <div id="kh-counter" style="font-size:.55rem;color:rgba(0,245,255,.4);letter-spacing:.2em;">FRAGMENTS: 0/4</div>
+      </div>
+      <div id="kh-input-hint" style="font-size:.56rem;color:rgba(0,245,255,.35);letter-spacing:.15em;">// найди все 4 фрагмента (0/4) //</div>
+      <div style="display:flex;gap:8px;width:100%;align-items:center;flex-wrap:wrap;">
+        <input id="kh-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+          placeholder="sk-ant-api03-..."
+          style="
+            flex:1;min-width:0;
+            background:rgba(0,10,25,.7);
+            border:1px solid rgba(0,245,255,.25);
+            color:#c8e8ff;
+            font-family:'Share Tech Mono',monospace;
+            font-size:.65rem;
+            padding:9px 14px;
+            outline:none;
+            letter-spacing:.08em;
+            clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+            transition:border-color .2s,box-shadow .2s;
+          "
+        >
+        <button id="kh-submit"
+          style="
+            font-family:'Share Tech Mono',monospace;
+            font-size:.6rem;
+            color:var(--c);
+            background:rgba(0,12,30,.9);
+            border:1px solid rgba(0,245,255,.3);
+            padding:9px 18px;
+            cursor:pointer;
+            letter-spacing:.18em;
+            clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+            transition:all .2s;
+            white-space:nowrap;
+          "
+        >VERIFY</button>
+      </div>
+      <div id="kh-result" style="font-size:.6rem;letter-spacing:.15em;min-height:18px;"></div>
+    </div>
+  `;
+
+  const main = document.getElementById('main');
+  main.appendChild(divider);
+  main.appendChild(wrap);
+
+  const input = document.getElementById('kh-input');
+  const btn = document.getElementById('kh-submit');
+  const result = document.getElementById('kh-result');
+
+  input.addEventListener('focus', () => {
+    input.style.borderColor = 'rgba(0,245,255,.6)';
+    input.style.boxShadow = '0 0 10px rgba(0,245,255,.2)';
+  });
+  input.addEventListener('blur', () => {
+    input.style.borderColor = 'rgba(0,245,255,.25)';
+    input.style.boxShadow = 'none';
+  });
+
+  function verify() {
+    const val = input.value.trim();
+    if (!val) return;
+
+    if (val === FULL_KEY) {
+      result.style.color = '#28c840';
+      result.textContent = '// ПОЗДРАВЛЯЮ — ВЫ ВВЕЛИ ВЕРНЫЙ КЛЮЧ! P.S. ЭТО ФЕЙК 😺 //';
+      input.style.borderColor = '#28c840';
+      input.style.boxShadow = '0 0 12px rgba(40,200,64,.3)';
+      btn.style.color = '#28c840';
+      btn.style.borderColor = '#28c840';
+      failed = false;
+    } else {
+      result.style.color = '#ff2d78';
+      result.textContent = '// КЛЮЧ НЕДЕЙСТВИТЕЛЕН — ФРАГМЕНТЫ ПЕРЕМЕШАНЫ //';
+      input.style.borderColor = '#ff2d78';
+      input.style.boxShadow = '0 0 12px rgba(255,45,120,.25)';
+      btn.style.color = '#ff2d78';
+      btn.style.borderColor = '#ff2d78';
+      input.value = '';
+      failed = true;
+
+      setTimeout(() => {
+        result.textContent = '';
+        input.style.borderColor = 'rgba(0,245,255,.25)';
+        input.style.boxShadow = 'none';
+        btn.style.color = 'var(--c)';
+        btn.style.borderColor = 'rgba(0,245,255,.3)';
+        assignSlots();
+        updateFoundCounter();
+      }, 2000);
+    }
+  }
+
+  btn.addEventListener('click', verify);
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') verify(); });
+}
+
+// Запуск — ждём когда main появится
+function waitForMain() {
+  const main = document.getElementById('main');
+  if (!main) { setTimeout(waitForMain, 100); return; }
+
+  // Наблюдаем когда main получит класс show
+  const obs = new MutationObserver(() => {
+    if (main.classList.contains('show')) {
+      obs.disconnect();
+      setTimeout(() => {
+        buildInputBlock();
+        assignSlots();
+      }, 400);
+    }
+  });
+  obs.observe(main, { attributes: true, attributeFilter: ['class'] });
+}
+
+waitForMain();
+
+})();
 </script>
 </body>
 </html>
