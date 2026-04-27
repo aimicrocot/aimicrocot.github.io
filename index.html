@@ -1170,12 +1170,24 @@ stopBtn.addEventListener('click', (e) => {
 // ===== KEY HUNT GAME =====
 (function(){
 
-const KEY_PARTS = [
-  'sk-ant-api03-4n9kL2m5T',
-  'Q7r8Z3vXyW1aB9cDeF3gHi',
-  'JkLmNoPqRsTuVwX1yZ2AbC4',
-  'dE5fG6hI7jK8lM9nO0pQ'
-];
+const CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+function randStr(len) {
+  return Array.from({length: len}, () => CHARS[Math.floor(Math.random() * CHARS.length)]).join('');
+}
+
+let KEY_PARTS = [];
+let FULL_KEY = '';
+
+function generateKey() {
+  KEY_PARTS = [
+    'sk-ant-api03-' + randStr(9),
+    randStr(12),
+    randStr(12),
+    randStr(8)
+  ];
+  FULL_KEY = KEY_PARTS.join('-');
+}
 
 const FULL_KEY = KEY_PARTS.join('');
 
@@ -1203,6 +1215,7 @@ function shuffle(arr) {
 }
 
 function assignSlots() {
+  generateKey();
   // чистим старые обёртки — восстанавливаем оригинальный текст
   document.querySelectorAll('.kh-letter').forEach(span => {
     const parent = span.parentNode;
@@ -1335,6 +1348,7 @@ function updateInputHint() {
 
 // ===== ПОЛЕ ВВОДА =====
 function buildInputBlock() {
+  generateKey();
   const divider = document.createElement('div');
   divider.className = 'player-divider';
   divider.style.marginTop = '22px';
