@@ -1180,13 +1180,12 @@ let KEY_PARTS = [];
 let FULL_KEY = '';
 
 function generateKey() {
-  KEY_PARTS = [
-    'sk-ant-api03-' + randStr(9),
-    randStr(12),
-    randStr(12),
-    randStr(8)
-  ];
-  FULL_KEY = KEY_PARTS.join('-');
+  const p1 = 'sk-ant-api03-';
+  const p2 = randStr(22) + '-';
+  const p3 = randStr(95) + '-';
+  const p4 = randStr(10) + 'AA';
+  KEY_PARTS = [p1, p2, p3, p4];
+  FULL_KEY = p1 + p2 + p3 + p4;
 }
 
 const POOL = [
