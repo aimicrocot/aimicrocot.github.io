@@ -1294,6 +1294,7 @@ function onSlotClick(slotIdx, wrapper) {
     clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
     pointer-events:none;
     text-align:center;
+    white-space:nowrap;
   `;
 
   document.body.appendChild(tip);
@@ -1301,7 +1302,8 @@ function onSlotClick(slotIdx, wrapper) {
   // позиционируем
   const rect = wrapper.getBoundingClientRect();
   let top = rect.bottom + 8 + window.scrollY;
-  let left = Math.max(8, Math.min(rect.left + rect.width/2 - 240, window.innerWidth - 496));
+  let left = rect.left + rect.width/2 - 120;
+  left = Math.max(8, Math.min(left, window.innerWidth - 260));
   tip.style.top = top + 'px';
   tip.style.left = left + 'px';
 
