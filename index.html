@@ -144,18 +144,40 @@ header{animation:fup2 .5s ease .05s both}
 .status{animation:fup2 .4s ease .5s both}
 
 /* ===== SCROLL REVEAL ===== */
-.sr-left{opacity:0;transform:translateX(-60px) skewX(4deg);transition:opacity .5s cubic-bezier(0.16,1,0.3,1),transform .5s cubic-bezier(0.16,1,0.3,1),box-shadow .5s ease}
-.sr-right{opacity:0;transform:translateX(60px) skewX(-4deg);transition:opacity .5s cubic-bezier(0.16,1,0.3,1),transform .5s cubic-bezier(0.16,1,0.3,1),box-shadow .5s ease}
-.sr-up{opacity:0;transform:translateY(40px) scaleY(.92);transition:opacity .5s cubic-bezier(0.16,1,0.3,1),transform .5s cubic-bezier(0.16,1,0.3,1)}
-.sr-expand{opacity:0;transform:scaleX(0);transform-origin:center;transition:opacity .4s ease,transform .45s cubic-bezier(0.16,1,0.3,1)}
+.sr-left{
+  opacity:0;
+  transform:translateX(-120%) skewX(8deg) scaleX(1.04);
+  transition:opacity .55s cubic-bezier(0.22,1,0.36,1), transform .55s cubic-bezier(0.22,1,0.36,1), box-shadow .4s ease;
+  will-change:transform,opacity;
+}
+.sr-right{
+  opacity:0;
+  transform:translateX(120%) skewX(-8deg) scaleX(1.04);
+  transition:opacity .55s cubic-bezier(0.22,1,0.36,1), transform .55s cubic-bezier(0.22,1,0.36,1), box-shadow .4s ease;
+  will-change:transform,opacity;
+}
+.sr-up{
+  opacity:0;
+  transform:translateY(60px) scaleY(.88);
+  transition:opacity .5s cubic-bezier(0.22,1,0.36,1), transform .5s cubic-bezier(0.22,1,0.36,1);
+  will-change:transform,opacity;
+}
+.sr-expand{
+  opacity:0;
+  transform:scaleX(0);
+  transform-origin:center;
+  transition:opacity .35s ease, transform .5s cubic-bezier(0.22,1,0.36,1);
+}
 
 .sr-left.sr-in,.sr-right.sr-in,.sr-up.sr-in{opacity:1;transform:none}
 .sr-expand.sr-in{opacity:1;transform:scaleX(1)}
 
-.sr-left.sr-in,.sr-right.sr-in{box-shadow:0 0 18px rgba(0,245,255,.12),0 0 4px rgba(0,245,255,.25)}
-
-@keyframes sr-flash{0%{box-shadow:0 0 0 rgba(0,245,255,0)}40%{box-shadow:0 0 28px rgba(0,245,255,.55),0 0 6px rgba(0,245,255,.8)}100%{box-shadow:0 0 10px rgba(0,245,255,.1)}}
-.sr-flash-in{animation:sr-flash .6s ease forwards}
+@keyframes sr-flash{
+  0%  {box-shadow:0 0 0 rgba(0,245,255,0),  inset 0 0 0 rgba(0,245,255,0)}
+  35% {box-shadow:0 0 32px rgba(0,245,255,.7), 0 0 8px rgba(0,245,255,1), inset 0 0 20px rgba(0,245,255,.12)}
+  100%{box-shadow:0 0 10px rgba(0,245,255,.1), inset 0 0 0 rgba(0,245,255,0)}
+}
+.sr-flash-in{animation:sr-flash .7s ease forwards}
 
 @media(max-width:600px){
   .nav{max-width:100%;padding:0 12px}
